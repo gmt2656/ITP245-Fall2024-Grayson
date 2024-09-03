@@ -1,0 +1,30 @@
+﻿@using ITP245_Fall2024_Grayson.Models;
+    @model Contact
+    
+<main aria-labelledby="title">
+    <h2 id="title">@Model.Author</h2>
+    <h3>@ViewBag.Message</h3>
+
+    <address>
+        @Model.Author<br />
+        <abbr title="Phone">P:</abbr>
+        <a href="tel:@Model.Phone">@Model.Phone</a>
+
+    </address>
+    <p><span style="font-weight:bold">Description: </span>
+    @Model.Description
+    </p>
+
+    <table>
+        <tr>
+            <th>Manages</th>
+        </tr>
+        @foreach (var name in Model.Manages)
+            {
+                <tr>
+                    <td>@name</td>
+                </tr>
+            }
+    </table>
+
+</main>
