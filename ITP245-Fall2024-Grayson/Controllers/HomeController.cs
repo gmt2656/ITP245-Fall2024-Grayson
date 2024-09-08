@@ -1,4 +1,5 @@
 ﻿using ITP245_Fall2024_Grayson.Models;
+using ITP245_Fall2024_Grayson.Models.Sports.cs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,9 +17,9 @@ namespace ITP245_Fall2024_Grayson.Controllers
 
         public ActionResult About()
         {
-            ViewBag.Message = "Your application description page.";
-
-            return View();
+            ViewBag.Message = "Grayson's About Page";
+            var about = new About();
+            return View(about);
         }
 
         public ActionResult Contact()
