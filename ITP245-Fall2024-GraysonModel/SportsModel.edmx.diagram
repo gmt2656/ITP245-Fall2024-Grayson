@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="f24614ff29c44a01a9fdb0aa7a83ca34" Name="Diagram1">
+        <EntityTypeShape EntityType="SportsModel.Activity" Width="1.5" PointX="11" PointY="3.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="SportsModel.DimDate" Width="1.5" PointX="8.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SportsModel.Project" Width="1.5" PointX="9.5" PointY="9.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="SportsModel.ProjectMember" Width="1.5" PointX="11.75" PointY="10.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="SportsModel.Student" Width="1.5" PointX="9.5" PointY="12.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="SportsModel.Task" Width="1.5" PointX="14" PointY="3.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="SportsModel.SystemOption" Width="1.5" PointX="8.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SportsModel.Division" Width="1.5" PointX="3.75" PointY="3.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="SportsModel.Field" Width="1.5" PointX="0.75" PointY="2.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="SportsModel.Game" Width="1.5" PointX="3" PointY="6.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="SportsModel.Office" Width="1.5" PointX="3" PointY="11.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="SportsModel.Player" Width="1.5" PointX="0.75" PointY="5.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="SportsModel.Roster" Width="1.5" PointX="6" PointY="7.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="SportsModel.SportsImage" Width="1.5" PointX="5.75" PointY="10.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SportsModel.Team" Width="1.5" PointX="6" PointY="2.5" IsExpanded="true" />
+        <AssociationConnector Association="SportsModel.FK_54" ManuallyRouted="false" />
+        <AssociationConnector Association="SportsModel.FK_67" ManuallyRouted="false" />
+        <AssociationConnector Association="SportsModel.FK_74" ManuallyRouted="false" />
+        <AssociationConnector Association="SportsModel.FK_61" ManuallyRouted="false" />
+        <AssociationConnector Association="SportsModel.FK_Task_DimDate" ManuallyRouted="false" />
+        <AssociationConnector Association="SportsModel.FK_ProjectMember_ProjectMember" ManuallyRouted="false" />
+        <AssociationConnector Association="SportsModel.FK_16" ManuallyRouted="false" />
+        <AssociationConnector Association="SportsModel.FK_71" ManuallyRouted="false" />
+        <AssociationConnector Association="SportsModel.FK_dbo_Team_dbo_Division_DivisionId" ManuallyRouted="false" />
+        <AssociationConnector Association="SportsModel.FK_dbo_Game_dbo_Field_FieldId" ManuallyRouted="false" />
+        <AssociationConnector Association="SportsModel.FK_dbo_Game_dbo_Team_HomeTeam_TeamId" ManuallyRouted="false" />
+        <AssociationConnector Association="SportsModel.FK_dbo_Game_dbo_Team_VisitorTeam_TeamId" ManuallyRouted="false" />
+        <AssociationConnector Association="SportsModel.FK_Game_Player" ManuallyRouted="false" />
+        <AssociationConnector Association="SportsModel.FK_Office_Player" ManuallyRouted="false" />
+        <AssociationConnector Association="SportsModel.FK_Roster_Player" ManuallyRouted="false" />
+        <AssociationConnector Association="SportsModel.FK_Team_AsstManager" ManuallyRouted="false" />
+        <AssociationConnector Association="SportsModel.FK_Team_Manager" ManuallyRouted="false" />
+        <AssociationConnector Association="SportsModel.FK_Roster_Team" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
