@@ -5,74 +5,6 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
       <Schema Namespace="SportsModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <EntityType Name="Activity">
-          <Key>
-            <PropertyRef Name="ActivityId" />
-          </Key>
-          <Property Name="ActivityId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Name" Type="varchar" MaxLength="100" Nullable="false" />
-          <Property Name="ProjectMemberId" Type="int" Nullable="false" />
-          <Property Name="TaskId" Type="int" Nullable="false" />
-          <Property Name="DateKey" Type="int" Nullable="false" />
-          <Property Name="Comment" Type="varchar(max)" />
-          <Property Name="SourceCodeLocation" Type="varchar(max)" />
-          <Property Name="Hours" Type="int" />
-          <Property Name="Minutes" Type="int" />
-          <Property Name="Description" Type="varchar(max)" />
-        </EntityType>
-        <EntityType Name="DimDate">
-          <Key>
-            <PropertyRef Name="DateKey" />
-          </Key>
-          <Property Name="DateKey" Type="int" Nullable="false" />
-          <Property Name="CalendarDate" Type="datetime" Nullable="false" />
-          <Property Name="SemesterWeekNumber" Type="int" Nullable="false" />
-          <Property Name="DayOfWeek" Type="int" Nullable="false" />
-          <Property Name="PigNumber" Type="int" Nullable="false" />
-          <Property Name="SprintNumber" Type="int" Nullable="false" />
-        </EntityType>
-        <EntityType Name="Project">
-          <Key>
-            <PropertyRef Name="ProjectId" />
-          </Key>
-          <Property Name="ProjectId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="CollaborationLink" Type="varchar(max)" />
-          <Property Name="ApplicationLink" Type="varchar(max)" />
-          <Property Name="GitHubLink" Type="varchar(max)" />
-        </EntityType>
-        <EntityType Name="ProjectMember">
-          <Key>
-            <PropertyRef Name="ProjectMemberId" />
-          </Key>
-          <Property Name="ProjectMemberId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="StudentId" Type="int" Nullable="false" />
-          <Property Name="ProjectId" Type="int" Nullable="false" />
-        </EntityType>
-        <EntityType Name="Student">
-          <Key>
-            <PropertyRef Name="StudentId" />
-          </Key>
-          <Property Name="StudentId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="FirstName" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="LastName" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="UserName" Type="varchar(max)" Nullable="false" />
-          <Property Name="ImageLocation" Type="varchar(max)" />
-        </EntityType>
-        <EntityType Name="Task">
-          <Key>
-            <PropertyRef Name="TaskId" />
-          </Key>
-          <Property Name="TaskId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="ProjectMemberId" Type="int" Nullable="false" />
-          <Property Name="Name" Type="varchar" MaxLength="100" Nullable="false" />
-          <Property Name="DueDateKey" Type="int" Nullable="false" />
-          <Property Name="StatusId" Type="int" Nullable="false" />
-          <Property Name="Comment" Type="varchar(max)" />
-          <Property Name="CourseId" Type="int" />
-          <Property Name="Description" Type="varchar(max)" />
-          <Property Name="CompletedDateKey" Type="int" />
-        </EntityType>
         <EntityType Name="SystemOptions">
           <Key>
             <PropertyRef Name="SystemOptionsID" />
@@ -172,78 +104,6 @@
           <Property Name="AssistantManagerID" Type="int" />
           <Property Name="ShortName" Type="varchar" MaxLength="10" />
         </EntityType>
-        <Association Name="FK_16">
-          <End Role="Student" Type="Self.Student" Multiplicity="1" />
-          <End Role="ProjectMember" Type="Self.ProjectMember" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Student">
-              <PropertyRef Name="StudentId" />
-            </Principal>
-            <Dependent Role="ProjectMember">
-              <PropertyRef Name="StudentId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_54">
-          <End Role="DimDate" Type="Self.DimDate" Multiplicity="1" />
-          <End Role="Activity" Type="Self.Activity" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="DimDate">
-              <PropertyRef Name="DateKey" />
-            </Principal>
-            <Dependent Role="Activity">
-              <PropertyRef Name="DateKey" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_61">
-          <End Role="DimDate" Type="Self.DimDate" Multiplicity="1" />
-          <End Role="Task" Type="Self.Task" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="DimDate">
-              <PropertyRef Name="DateKey" />
-            </Principal>
-            <Dependent Role="Task">
-              <PropertyRef Name="DueDateKey" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_67">
-          <End Role="Task" Type="Self.Task" Multiplicity="1" />
-          <End Role="Activity" Type="Self.Activity" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Task">
-              <PropertyRef Name="TaskId" />
-            </Principal>
-            <Dependent Role="Activity">
-              <PropertyRef Name="TaskId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_71">
-          <End Role="ProjectMember" Type="Self.ProjectMember" Multiplicity="1" />
-          <End Role="Task" Type="Self.Task" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ProjectMember">
-              <PropertyRef Name="ProjectMemberId" />
-            </Principal>
-            <Dependent Role="Task">
-              <PropertyRef Name="ProjectMemberId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_74">
-          <End Role="ProjectMember" Type="Self.ProjectMember" Multiplicity="1" />
-          <End Role="Activity" Type="Self.Activity" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ProjectMember">
-              <PropertyRef Name="ProjectMemberId" />
-            </Principal>
-            <Dependent Role="Activity">
-              <PropertyRef Name="ProjectMemberId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_dbo_Game_dbo_Field_FieldId">
           <End Role="Field" Type="Self.Field" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -320,18 +180,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_ProjectMember_ProjectMember">
-          <End Role="Project" Type="Self.Project" Multiplicity="1" />
-          <End Role="ProjectMember" Type="Self.ProjectMember" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Project">
-              <PropertyRef Name="ProjectId" />
-            </Principal>
-            <Dependent Role="ProjectMember">
-              <PropertyRef Name="ProjectId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Roster_Player">
           <End Role="Player" Type="Self.Player" Multiplicity="1" />
           <End Role="Roster" Type="Self.Roster" Multiplicity="*" />
@@ -353,18 +201,6 @@
             </Principal>
             <Dependent Role="Roster">
               <PropertyRef Name="TeamId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Task_DimDate">
-          <End Role="DimDate" Type="Self.DimDate" Multiplicity="0..1" />
-          <End Role="Task" Type="Self.Task" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="DimDate">
-              <PropertyRef Name="DateKey" />
-            </Principal>
-            <Dependent Role="Task">
-              <PropertyRef Name="CompletedDateKey" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -393,12 +229,6 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="SportsModelStoreContainer">
-          <EntitySet Name="Activity" EntityType="Self.Activity" Schema="Agile" store:Type="Tables" />
-          <EntitySet Name="DimDate" EntityType="Self.DimDate" Schema="Agile" store:Type="Tables" />
-          <EntitySet Name="Project" EntityType="Self.Project" Schema="Agile" store:Type="Tables" />
-          <EntitySet Name="ProjectMember" EntityType="Self.ProjectMember" Schema="Agile" store:Type="Tables" />
-          <EntitySet Name="Student" EntityType="Self.Student" Schema="Agile" store:Type="Tables" />
-          <EntitySet Name="Task" EntityType="Self.Task" Schema="Agile" store:Type="Tables" />
           <EntitySet Name="SystemOptions" EntityType="Self.SystemOptions" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Division" EntityType="Self.Division" Schema="Sports" store:Type="Tables" />
           <EntitySet Name="Field" EntityType="Self.Field" Schema="Sports" store:Type="Tables" />
@@ -408,30 +238,6 @@
           <EntitySet Name="Roster" EntityType="Self.Roster" Schema="Sports" store:Type="Tables" />
           <EntitySet Name="SportsImage" EntityType="Self.SportsImage" Schema="Sports" store:Type="Tables" />
           <EntitySet Name="Team" EntityType="Self.Team" Schema="Sports" store:Type="Tables" />
-          <AssociationSet Name="FK_16" Association="Self.FK_16">
-            <End Role="Student" EntitySet="Student" />
-            <End Role="ProjectMember" EntitySet="ProjectMember" />
-          </AssociationSet>
-          <AssociationSet Name="FK_54" Association="Self.FK_54">
-            <End Role="DimDate" EntitySet="DimDate" />
-            <End Role="Activity" EntitySet="Activity" />
-          </AssociationSet>
-          <AssociationSet Name="FK_61" Association="Self.FK_61">
-            <End Role="DimDate" EntitySet="DimDate" />
-            <End Role="Task" EntitySet="Task" />
-          </AssociationSet>
-          <AssociationSet Name="FK_67" Association="Self.FK_67">
-            <End Role="Task" EntitySet="Task" />
-            <End Role="Activity" EntitySet="Activity" />
-          </AssociationSet>
-          <AssociationSet Name="FK_71" Association="Self.FK_71">
-            <End Role="ProjectMember" EntitySet="ProjectMember" />
-            <End Role="Task" EntitySet="Task" />
-          </AssociationSet>
-          <AssociationSet Name="FK_74" Association="Self.FK_74">
-            <End Role="ProjectMember" EntitySet="ProjectMember" />
-            <End Role="Activity" EntitySet="Activity" />
-          </AssociationSet>
           <AssociationSet Name="FK_dbo_Game_dbo_Field_FieldId" Association="Self.FK_dbo_Game_dbo_Field_FieldId">
             <End Role="Field" EntitySet="Field" />
             <End Role="Game" EntitySet="Game" />
@@ -456,10 +262,6 @@
             <End Role="Player" EntitySet="Player" />
             <End Role="Office" EntitySet="Office" />
           </AssociationSet>
-          <AssociationSet Name="FK_ProjectMember_ProjectMember" Association="Self.FK_ProjectMember_ProjectMember">
-            <End Role="Project" EntitySet="Project" />
-            <End Role="ProjectMember" EntitySet="ProjectMember" />
-          </AssociationSet>
           <AssociationSet Name="FK_Roster_Player" Association="Self.FK_Roster_Player">
             <End Role="Player" EntitySet="Player" />
             <End Role="Roster" EntitySet="Roster" />
@@ -467,10 +269,6 @@
           <AssociationSet Name="FK_Roster_Team" Association="Self.FK_Roster_Team">
             <End Role="Team" EntitySet="Team" />
             <End Role="Roster" EntitySet="Roster" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Task_DimDate" Association="Self.FK_Task_DimDate">
-            <End Role="DimDate" EntitySet="DimDate" />
-            <End Role="Task" EntitySet="Task" />
           </AssociationSet>
           <AssociationSet Name="FK_Team_AsstManager" Association="Self.FK_Team_AsstManager">
             <End Role="Player" EntitySet="Player" />
@@ -486,90 +284,6 @@
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="SportsModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityType Name="Activity">
-          <Key>
-            <PropertyRef Name="ActivityId" />
-          </Key>
-          <Property Name="ActivityId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="ProjectMemberId" Type="Int32" Nullable="false" />
-          <Property Name="TaskId" Type="Int32" Nullable="false" />
-          <Property Name="DateKey" Type="Int32" Nullable="false" />
-          <Property Name="Comment" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="SourceCodeLocation" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="Hours" Type="Int32" />
-          <Property Name="Minutes" Type="Int32" />
-          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="DimDate" Relationship="Self.FK_54" FromRole="Activity" ToRole="DimDate" />
-          <NavigationProperty Name="Task" Relationship="Self.FK_67" FromRole="Activity" ToRole="Task" />
-          <NavigationProperty Name="ProjectMember" Relationship="Self.FK_74" FromRole="Activity" ToRole="ProjectMember" />
-        </EntityType>
-        <EntityType Name="DimDate">
-          <Key>
-            <PropertyRef Name="DateKey" />
-          </Key>
-          <Property Name="DateKey" Type="Int32" Nullable="false" />
-          <Property Name="CalendarDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="SemesterWeekNumber" Type="Int32" Nullable="false" />
-          <Property Name="DayOfWeek" Type="Int32" Nullable="false" />
-          <Property Name="PigNumber" Type="Int32" Nullable="false" />
-          <Property Name="SprintNumber" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Activities" Relationship="Self.FK_54" FromRole="DimDate" ToRole="Activity" />
-          <NavigationProperty Name="Tasks" Relationship="Self.FK_61" FromRole="DimDate" ToRole="Task" />
-          <NavigationProperty Name="Tasks1" Relationship="Self.FK_Task_DimDate" FromRole="DimDate" ToRole="Task" />
-        </EntityType>
-        <EntityType Name="Project">
-          <Key>
-            <PropertyRef Name="ProjectId" />
-          </Key>
-          <Property Name="ProjectId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="CollaborationLink" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="ApplicationLink" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="GitHubLink" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="ProjectMembers" Relationship="Self.FK_ProjectMember_ProjectMember" FromRole="Project" ToRole="ProjectMember" />
-        </EntityType>
-        <EntityType Name="ProjectMember">
-          <Key>
-            <PropertyRef Name="ProjectMemberId" />
-          </Key>
-          <Property Name="ProjectMemberId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="StudentId" Type="Int32" Nullable="false" />
-          <Property Name="ProjectId" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Activities" Relationship="Self.FK_74" FromRole="ProjectMember" ToRole="Activity" />
-          <NavigationProperty Name="Project" Relationship="Self.FK_ProjectMember_ProjectMember" FromRole="ProjectMember" ToRole="Project" />
-          <NavigationProperty Name="Student" Relationship="Self.FK_16" FromRole="ProjectMember" ToRole="Student" />
-          <NavigationProperty Name="Tasks" Relationship="Self.FK_71" FromRole="ProjectMember" ToRole="Task" />
-        </EntityType>
-        <EntityType Name="Student">
-          <Key>
-            <PropertyRef Name="StudentId" />
-          </Key>
-          <Property Name="StudentId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="UserName" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="ImageLocation" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="ProjectMembers" Relationship="Self.FK_16" FromRole="Student" ToRole="ProjectMember" />
-        </EntityType>
-        <EntityType Name="Task">
-          <Key>
-            <PropertyRef Name="TaskId" />
-          </Key>
-          <Property Name="TaskId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ProjectMemberId" Type="Int32" Nullable="false" />
-          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="DueDateKey" Type="Int32" Nullable="false" />
-          <Property Name="StatusId" Type="Int32" Nullable="false" />
-          <Property Name="Comment" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="CourseId" Type="Int32" />
-          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="CompletedDateKey" Type="Int32" />
-          <NavigationProperty Name="Activities" Relationship="Self.FK_67" FromRole="Task" ToRole="Activity" />
-          <NavigationProperty Name="DimDate" Relationship="Self.FK_61" FromRole="Task" ToRole="DimDate" />
-          <NavigationProperty Name="DimDate1" Relationship="Self.FK_Task_DimDate" FromRole="Task" ToRole="DimDate" />
-          <NavigationProperty Name="ProjectMember" Relationship="Self.FK_71" FromRole="Task" ToRole="ProjectMember" />
-        </EntityType>
         <EntityType Name="SystemOption">
           <Key>
             <PropertyRef Name="SystemOptionsID" />
@@ -689,102 +403,6 @@
           <NavigationProperty Name="Player1" Relationship="Self.FK_Team_Manager" FromRole="Team" ToRole="Player" />
           <NavigationProperty Name="Rosters" Relationship="Self.FK_Roster_Team" FromRole="Team" ToRole="Roster" />
         </EntityType>
-        <Association Name="FK_54">
-          <End Role="DimDate" Type="Self.DimDate" Multiplicity="1" />
-          <End Role="Activity" Type="Self.Activity" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="DimDate">
-              <PropertyRef Name="DateKey" />
-            </Principal>
-            <Dependent Role="Activity">
-              <PropertyRef Name="DateKey" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_67">
-          <End Role="Task" Type="Self.Task" Multiplicity="1" />
-          <End Role="Activity" Type="Self.Activity" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Task">
-              <PropertyRef Name="TaskId" />
-            </Principal>
-            <Dependent Role="Activity">
-              <PropertyRef Name="TaskId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_74">
-          <End Role="ProjectMember" Type="Self.ProjectMember" Multiplicity="1" />
-          <End Role="Activity" Type="Self.Activity" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ProjectMember">
-              <PropertyRef Name="ProjectMemberId" />
-            </Principal>
-            <Dependent Role="Activity">
-              <PropertyRef Name="ProjectMemberId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_61">
-          <End Role="DimDate" Type="Self.DimDate" Multiplicity="1" />
-          <End Role="Task" Type="Self.Task" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="DimDate">
-              <PropertyRef Name="DateKey" />
-            </Principal>
-            <Dependent Role="Task">
-              <PropertyRef Name="DueDateKey" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Task_DimDate">
-          <End Role="DimDate" Type="Self.DimDate" Multiplicity="0..1" />
-          <End Role="Task" Type="Self.Task" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="DimDate">
-              <PropertyRef Name="DateKey" />
-            </Principal>
-            <Dependent Role="Task">
-              <PropertyRef Name="CompletedDateKey" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ProjectMember_ProjectMember">
-          <End Role="Project" Type="Self.Project" Multiplicity="1" />
-          <End Role="ProjectMember" Type="Self.ProjectMember" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Project">
-              <PropertyRef Name="ProjectId" />
-            </Principal>
-            <Dependent Role="ProjectMember">
-              <PropertyRef Name="ProjectId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_16">
-          <End Role="Student" Type="Self.Student" Multiplicity="1" />
-          <End Role="ProjectMember" Type="Self.ProjectMember" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Student">
-              <PropertyRef Name="StudentId" />
-            </Principal>
-            <Dependent Role="ProjectMember">
-              <PropertyRef Name="StudentId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_71">
-          <End Role="ProjectMember" Type="Self.ProjectMember" Multiplicity="1" />
-          <End Role="Task" Type="Self.Task" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ProjectMember">
-              <PropertyRef Name="ProjectMemberId" />
-            </Principal>
-            <Dependent Role="Task">
-              <PropertyRef Name="ProjectMemberId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_dbo_Team_dbo_Division_DivisionId">
           <End Role="Division" Type="Self.Division" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -910,12 +528,6 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="SportsEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Activities" EntityType="Self.Activity" />
-          <EntitySet Name="DimDates" EntityType="Self.DimDate" />
-          <EntitySet Name="Projects" EntityType="Self.Project" />
-          <EntitySet Name="ProjectMembers" EntityType="Self.ProjectMember" />
-          <EntitySet Name="Students" EntityType="Self.Student" />
-          <EntitySet Name="Tasks" EntityType="Self.Task" />
           <EntitySet Name="SystemOptions" EntityType="Self.SystemOption" />
           <EntitySet Name="Divisions" EntityType="Self.Division" />
           <EntitySet Name="Fields" EntityType="Self.Field" />
@@ -925,38 +537,6 @@
           <EntitySet Name="Rosters" EntityType="Self.Roster" />
           <EntitySet Name="SportsImages" EntityType="Self.SportsImage" />
           <EntitySet Name="Teams" EntityType="Self.Team" />
-          <AssociationSet Name="FK_54" Association="Self.FK_54">
-            <End Role="DimDate" EntitySet="DimDates" />
-            <End Role="Activity" EntitySet="Activities" />
-          </AssociationSet>
-          <AssociationSet Name="FK_67" Association="Self.FK_67">
-            <End Role="Task" EntitySet="Tasks" />
-            <End Role="Activity" EntitySet="Activities" />
-          </AssociationSet>
-          <AssociationSet Name="FK_74" Association="Self.FK_74">
-            <End Role="ProjectMember" EntitySet="ProjectMembers" />
-            <End Role="Activity" EntitySet="Activities" />
-          </AssociationSet>
-          <AssociationSet Name="FK_61" Association="Self.FK_61">
-            <End Role="DimDate" EntitySet="DimDates" />
-            <End Role="Task" EntitySet="Tasks" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Task_DimDate" Association="Self.FK_Task_DimDate">
-            <End Role="DimDate" EntitySet="DimDates" />
-            <End Role="Task" EntitySet="Tasks" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ProjectMember_ProjectMember" Association="Self.FK_ProjectMember_ProjectMember">
-            <End Role="Project" EntitySet="Projects" />
-            <End Role="ProjectMember" EntitySet="ProjectMembers" />
-          </AssociationSet>
-          <AssociationSet Name="FK_16" Association="Self.FK_16">
-            <End Role="Student" EntitySet="Students" />
-            <End Role="ProjectMember" EntitySet="ProjectMembers" />
-          </AssociationSet>
-          <AssociationSet Name="FK_71" Association="Self.FK_71">
-            <End Role="ProjectMember" EntitySet="ProjectMembers" />
-            <End Role="Task" EntitySet="Tasks" />
-          </AssociationSet>
           <AssociationSet Name="FK_dbo_Team_dbo_Division_DivisionId" Association="Self.FK_dbo_Team_dbo_Division_DivisionId">
             <End Role="Division" EntitySet="Divisions" />
             <End Role="Team" EntitySet="Teams" />
@@ -1004,80 +584,6 @@
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="SportsModelStoreContainer" CdmEntityContainer="SportsEntities">
-          <EntitySetMapping Name="Activities">
-            <EntityTypeMapping TypeName="SportsModel.Activity">
-              <MappingFragment StoreEntitySet="Activity">
-                <ScalarProperty Name="ActivityId" ColumnName="ActivityId" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="ProjectMemberId" ColumnName="ProjectMemberId" />
-                <ScalarProperty Name="TaskId" ColumnName="TaskId" />
-                <ScalarProperty Name="DateKey" ColumnName="DateKey" />
-                <ScalarProperty Name="Comment" ColumnName="Comment" />
-                <ScalarProperty Name="SourceCodeLocation" ColumnName="SourceCodeLocation" />
-                <ScalarProperty Name="Hours" ColumnName="Hours" />
-                <ScalarProperty Name="Minutes" ColumnName="Minutes" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="DimDates">
-            <EntityTypeMapping TypeName="SportsModel.DimDate">
-              <MappingFragment StoreEntitySet="DimDate">
-                <ScalarProperty Name="DateKey" ColumnName="DateKey" />
-                <ScalarProperty Name="CalendarDate" ColumnName="CalendarDate" />
-                <ScalarProperty Name="SemesterWeekNumber" ColumnName="SemesterWeekNumber" />
-                <ScalarProperty Name="DayOfWeek" ColumnName="DayOfWeek" />
-                <ScalarProperty Name="PigNumber" ColumnName="PigNumber" />
-                <ScalarProperty Name="SprintNumber" ColumnName="SprintNumber" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Projects">
-            <EntityTypeMapping TypeName="SportsModel.Project">
-              <MappingFragment StoreEntitySet="Project">
-                <ScalarProperty Name="ProjectId" ColumnName="ProjectId" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="CollaborationLink" ColumnName="CollaborationLink" />
-                <ScalarProperty Name="ApplicationLink" ColumnName="ApplicationLink" />
-                <ScalarProperty Name="GitHubLink" ColumnName="GitHubLink" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="ProjectMembers">
-            <EntityTypeMapping TypeName="SportsModel.ProjectMember">
-              <MappingFragment StoreEntitySet="ProjectMember">
-                <ScalarProperty Name="ProjectMemberId" ColumnName="ProjectMemberId" />
-                <ScalarProperty Name="StudentId" ColumnName="StudentId" />
-                <ScalarProperty Name="ProjectId" ColumnName="ProjectId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Students">
-            <EntityTypeMapping TypeName="SportsModel.Student">
-              <MappingFragment StoreEntitySet="Student">
-                <ScalarProperty Name="StudentId" ColumnName="StudentId" />
-                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
-                <ScalarProperty Name="LastName" ColumnName="LastName" />
-                <ScalarProperty Name="UserName" ColumnName="UserName" />
-                <ScalarProperty Name="ImageLocation" ColumnName="ImageLocation" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Tasks">
-            <EntityTypeMapping TypeName="SportsModel.Task">
-              <MappingFragment StoreEntitySet="Task">
-                <ScalarProperty Name="TaskId" ColumnName="TaskId" />
-                <ScalarProperty Name="ProjectMemberId" ColumnName="ProjectMemberId" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="DueDateKey" ColumnName="DueDateKey" />
-                <ScalarProperty Name="StatusId" ColumnName="StatusId" />
-                <ScalarProperty Name="Comment" ColumnName="Comment" />
-                <ScalarProperty Name="CourseId" ColumnName="CourseId" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="CompletedDateKey" ColumnName="CompletedDateKey" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="SystemOptions">
             <EntityTypeMapping TypeName="SportsModel.SystemOption">
               <MappingFragment StoreEntitySet="SystemOptions">

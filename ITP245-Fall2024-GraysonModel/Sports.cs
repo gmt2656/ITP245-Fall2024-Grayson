@@ -10,14 +10,6 @@ namespace ITP245_Fall2024_GraysonModel
     {
         string Name { get; }
     }
-    public partial class Project : ISports
-    {
-
-    }
-    public partial class Student : ISports
-    {
-        public string Name => $"{LastName}, {FirstName}";
-    }
     public partial class Player : ISports
     {
         public string Name => $"{LastName}, {FirstName}";

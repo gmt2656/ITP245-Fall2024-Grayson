@@ -1,0 +1,27 @@
+﻿/* Sports.css */
+h1 {
+    font-family: 'Arial Black', sans-serif;
+    color: #4A90E2; /* Change to your desired color */
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+h2 {
+    font-family: 'Georgia', serif;
+    color: #D35400; /* Change to your desired color */
+    text-align: left;
+    margin-bottom: 15px;
+}
+
+table caption {
+    background-color: #F2F2F2; /* Change to your desired background color */
+    font-weight: bold;
+    font-size: 1.2em;
+    padding: 5px;
+}
+
+.contact-info {
+    border: 2px solid #D35400; /* Change to your desired border color */
+    padding: 10px;
+    margin-top: 20px;
+}

@@ -25,12 +25,6 @@ namespace ITP245_Fall2024_GraysonModel
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<Activity> Activities { get; set; }
-        public virtual DbSet<DimDate> DimDates { get; set; }
-        public virtual DbSet<Project> Projects { get; set; }
-        public virtual DbSet<ProjectMember> ProjectMembers { get; set; }
-        public virtual DbSet<Student> Students { get; set; }
-        public virtual DbSet<Task> Tasks { get; set; }
         public virtual DbSet<SystemOption> SystemOptions { get; set; }
         public virtual DbSet<Division> Divisions { get; set; }
         public virtual DbSet<Field> Fields { get; set; }

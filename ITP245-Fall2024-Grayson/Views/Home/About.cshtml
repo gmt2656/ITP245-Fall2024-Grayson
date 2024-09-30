@@ -5,30 +5,48 @@
     <h2 id="title">@Model.Name</h2>
     <h3>@ViewBag.Message</h3>
 
-    <address>
-        <strong>Email:</strong>
-        <a href="mailto:@Model.Email">@Model.Email</a><br />
-        <strong>Hometown:</strong> @Model.Hometown<br />
-        <strong>Major:</strong> @Model.Major<br />
-    </address>
+    <!-- Contact Information with a border -->
+    <div class="contact-info">
+        <address>
+            <strong>Email:</strong>
+            <a href="mailto:@Model.Email">@Model.Email</a><br />
+            <strong>Hometown:</strong> @Model.Hometown<br />
+            <strong>Major:</strong> @Model.Major<br />
+        </address>
+    </div>
 
-    <h3>Education</h3>
-    <p>@Model.Education</p>
+    <div class="container">
+        <div class="row">
+            <!-- Education Section -->
+            <div class="col-md-6">
+                <h3>Education</h3>
+                <p>@Model.Education</p>
+            </div>
 
-    <h3>Experience</h3>
-    <table>
-        <tr>
-            <th>Job Title</th>
-            <th>Company</th>
-            <th>Years</th>
-        </tr>
-        @foreach (var experience in Model.Experiences)
-        {
-            <tr>
-                <td>@experience.JobTitle</td>
-                <td>@experience.Company</td>
-                <td>@experience.Years</td>
-            </tr>
-        }
-    </table>
+            <!-- Experience Section with a Table -->
+            <div class="col-md-6">
+                <h3>Experience</h3>
+                <table class="table">
+                    <caption>Work Experience</caption>
+                    <thead>
+                        <tr>
+                            <th>Job Title</th>
+                            <th>Company</th>
+                            <th>Years</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var experience in Model.Experiences)
+                        {
+                            <tr>
+                                <td>@experience.JobTitle</td>
+                                <td>@experience.Company</td>
+                                <td>@experience.Years</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 </main>

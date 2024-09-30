@@ -17,5 +17,6 @@ namespace ITP245_Fall2024_Grayson
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
         }
+
     }
 }

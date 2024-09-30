@@ -1,16 +1,25 @@
-﻿<!DOCTYPE html>
-<html>
+﻿@using System.Reflection
+@{
+    // Get today's date for versioning and deployment
+    var today = DateTime.Now;
+    var versionNumber = $"{today.Year}.{today.Month}.{today.Day}.0"; // Example format: 2024.9.30.0
+    var deploymentDate = today.ToString("MMMM dd, yyyy"); // Example format: September 30, 2024
+}
+
+<!DOCTYPE html>
+<html lang="en">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
-    @Styles.Render("~/Content/css")
-    @Scripts.Render("~/bundles/modernizr")
+    <title>@ViewBag.Title - Grayson’s Sports Application</title>
+    @Styles.Render("~/Content/bootstrap") <!-- Render Bootstrap styles first -->
+    @Styles.Render("~/Content/css") <!-- Render custom styles -->
+    @Scripts.Render("~/bundles/modernizr") <!-- Modernizr -->
 </head>
 <body>
-    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark">
+    <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
         <div class="container">
-            @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            @Html.ActionLink("Sports Project Management", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" title="Toggle navigation" aria-controls="navbarSupportedContent"
                     aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -24,16 +33,15 @@
             </div>
         </div>
     </nav>
+
     <div class="container body-content">
-        @RenderBody()
+        @RenderBody() <!-- Main content -->
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+            <p>&copy; @DateTime.Now.Year - by Grayson Trippeer v @versionNumber</p> <!-- Version number from today's date -->
+            <p>Deployed on: @deploymentDate</p> <!-- Today's date formatted -->
         </footer>
     </div>
 
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
-    @RenderSection("scripts", required: false)
 </body>
 </html>

@@ -53,12 +53,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Activity.cs">
-      <DependentUpon>SportsModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DimDate.cs">
-      <DependentUpon>SportsModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Division.cs">
       <DependentUpon>SportsModel.tt</DependentUpon>
     </Compile>
@@ -72,12 +66,6 @@
       <DependentUpon>SportsModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Player.cs">
-      <DependentUpon>SportsModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Project.cs">
-      <DependentUpon>SportsModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="ProjectMember.cs">
       <DependentUpon>SportsModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -103,13 +91,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>SportsModel.edmx</DependentUpon>
     </Compile>
-    <Compile Include="Student.cs">
-      <DependentUpon>SportsModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="SystemOption.cs">
-      <DependentUpon>SportsModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Task.cs">
       <DependentUpon>SportsModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Team.cs">

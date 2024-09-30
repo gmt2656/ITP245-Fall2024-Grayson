@@ -1,10 +1,8 @@
 ﻿using ITP245_Fall2024_Grayson.Models;
 using ITP245_Fall2024_Grayson.Models.Sports.cs;
 using ITP245_Fall2024_GraysonModel;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace ITP245_Fall2024_Grayson.Controllers
@@ -19,16 +17,12 @@ namespace ITP245_Fall2024_Grayson.Controllers
                 var homePage = new Dictionary<string, List<ISports>>();
 
                 // Get all Teams from the database
-                var teams = db
-                    .Teams
-                    .OrderBy(t => t.Name)
-                    .ToList<ISports>();
+                var teams = db.Teams.OrderBy(t => t.Name).ToList<ISports>();
 
                 // Get only active Players (where IsActive is true)
-                var activePlayers = db
-                    .Players
+                var activePlayers = db.Players
                     .Where(p => p.IsActivePlayer)  // Filter to include only active players
-                    .OrderBy(p => p.LastName) // Optionally order by LastName or FirstName
+                    .OrderBy(p => p.LastName) // Optionally order by LastName
                     .ToList<ISports>();
 
                 // Add Teams and Active Players to the dictionary

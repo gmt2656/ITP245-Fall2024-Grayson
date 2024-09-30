@@ -18,5 +18,9 @@ namespace ITP245_Fall2024_GraysonModel
         public string Name { get; set; }
         public string Semester { get; set; }
         public string Bootstrap { get; set; }
+        public string SettingName { get; set; }
+        public object BootstrapTheme { get; set; }
+        public string Key { get; set; }
+        public string Value { get; set; }
     }
 }

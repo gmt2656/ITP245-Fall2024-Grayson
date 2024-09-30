@@ -25,7 +25,7 @@
                         <li class="mb-2">
                             <div class="card shadow-sm">
                                 <div class="card-body">
-                                    <h5 class="card-title">@project.Name</h5>
+                                    <h5 class="card-title">@(!string.IsNullOrEmpty(project.Name) ? project.Name : "Unnamed")</h5>
                                 </div>
                             </div>
                         </li>
