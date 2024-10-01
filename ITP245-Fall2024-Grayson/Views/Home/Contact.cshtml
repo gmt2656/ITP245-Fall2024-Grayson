@@ -1,25 +1,25 @@
 ﻿@using ITP245_Fall2024_Grayson.Models;
 @model Contact
 @{
-    ViewBag.Title = "Contact Information";
+    ViewBag.Title = "Contact Information"; // Set the title for the Contact page
+    Layout = "~/Views/Shared/_Layout.cshtml"; // Use the shared layout
 }
 
-<main aria-labelledby="title">
+<main aria-labelledby="title" class="container border p-4 bg-light">
     <h2 id="title">@Model.Author</h2>
-    <h3 style="color:cornflowerblue">@ViewBag.Message</h3>
-    <address>
-        @Model.Author<br />
-        <a href="mailto:@Model.Email">@Model.Email</a>
-        <abbr title="Phone">P:</abbr>
-        <a href="tel:@Model.Phone">@Model.Phone</a>
+    <h3 class="text-info">@ViewBag.Message</h3>
 
+    <address class="border p-3">
+        <strong>@Model.Author</strong><br />
+        <a href="mailto:@Model.Email">@Model.Email</a><br />
+        <abbr title="Phone">P:</abbr> <a href="tel:@Model.Phone">@Model.Phone</a>
     </address>
+
     <p>
-        <span style="font-weight:bold">Description: </span>
-        @Model.Description
+        <span class="font-weight-bold">Description:</span> @Model.Description
     </p>
 
-    <table>
+    <table class="table table-bordered">
         <tr>
             <th>Manages</th>
         </tr>
@@ -30,5 +30,4 @@
             </tr>
         }
     </table>
-
 </main>

@@ -7,34 +7,47 @@
 
 <!-- Main Section -->
 <main class="container my-5">
-    <section class="row mb-4" aria-labelledby="title">
-        <h1 id="title" class="text-center mb-4">Sports Project Management</h1>
+    <section class="row mb-4" aria-labelledby="mainTitle">
+        <h1 id="mainTitle" class="text-center mb-4">Sports Project Management</h1>
     </section>
 
     <div class="row">
         <!-- Loop through the Teams and Players -->
-        @foreach (var sports in Model)
+        @if (Model.Any())
         {
-            <section class="col-md-6 mb-4" aria-labelledby="sectionTitle">
-                <h2 class="border-bottom pb-2">@sports.Key</h2>
+            foreach (var sports in Model)
+            {
+                <section class="col-md-6 mb-4" aria-labelledby="@($"sectionTitle-{sports.Key.Replace(" ", "-")}")">
+                    <h2 id="@($"sectionTitle-{sports.Key.Replace(" ", "-")}")" class="border-bottom pb-2">@sports.Key</h2>
 
-                <!-- List of Teams/Players -->
-                <ul class="list-unstyled">
-                    @foreach (var project in sports.Value)
+                    <!-- List of Teams/Players -->
+                    @if (sports.Value.Any())
                     {
-                        <li class="mb-2">
-                            <div class="card shadow-sm">
-                                <div class="card-body">
-                                    <h5 class="card-title">@(!string.IsNullOrEmpty(project.Name) ? project.Name : "Unnamed")</h5>
-                                </div>
-                            </div>
-                        </li>
+                        <ul class="list-unstyled">
+                            @foreach (var project in sports.Value)
+                            {
+                                <li class="mb-2">
+                                    <div class="card shadow-sm">
+                                        <div class="card-body">
+                                            <h5 class="card-title">@(!string.IsNullOrEmpty(project.Name) ? project.Name : "Unnamed")</h5>
+                                        </div>
+                                    </div>
+                                </li>
+                            }
+                        </ul>
                     }
-                </ul>
-            </section>
+                    else
+                    {
+                        <p>No players or teams available for this sport.</p>
+                    }
+                </section>
+            }
+        }
+        else
+        {
+            <p class="text-center">No sports data available.</p>
         }
     </div>
 </main>
 
-<!-- Bootstrap CSS -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+

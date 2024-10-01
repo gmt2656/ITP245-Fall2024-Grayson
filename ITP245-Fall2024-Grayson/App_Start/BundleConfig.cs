@@ -1,5 +1,8 @@
-﻿using System.Web;
+﻿using System.Configuration;
+using System.Linq;
+using System.Web;
 using System.Web.Optimization;
+using ITP245_Fall2024_GraysonModel;
 
 namespace ITP245_Fall2024_Grayson
 {
@@ -7,44 +10,37 @@ namespace ITP245_Fall2024_Grayson
     {
         public static void RegisterBundles(BundleCollection bundles)
         {
-            // Add jQuery script bundle
-            bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
+            using (var entities = new SportsEntities())
+            {
+                var options = entities.SystemOptions.First(); // Get the first options entry
+
+                // Ensure that the Bootstrap property is not null or empty
+                if (!string.IsNullOrEmpty(options.Bootstrap))
+                {
+                    // Add jQuery script bundle
+                    bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
                         "~/Scripts/jquery-{version}.js"));
 
-            // Add jQuery validation script bundle
-            bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
-                        "~/Scripts/jquery.validate*"));
+                    // Add Bootstrap script bundle
+                    bundles.Add(new Bundle("~/bundles/bootstrap").Include(
+                        "~/Scripts/bootstrap.js",
+                        "~/Scripts/bootstrap.bundle.js"));
 
-            // Add Modernizr for feature detection
-            bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
-                        "~/Scripts/modernizr-*"));
-
-            // Add Bootstrap script bundle
-            bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
-                      "~/Scripts/bootstrap.js",
-                      "~/Scripts/bootstrap.bundle.js"));
-
-            // Add Bootstrap theme bundle with a hard-coded path
-            AddBootstrapThemeBundle(bundles);
-
-            // Add existing CSS files including your Sports.css
-            bundles.Add(new StyleBundle("~/Content/css").Include(
-                      "~/Content/Sports.css",
-                      "~/Content/site.css"));
+                    // Add CSS bundles with the Bootstrap option
+                    bundles.Add(new StyleBundle("~/Content/css").Include(
+                        $"~/Content/{options.Bootstrap}", // Use the theme filename from the database
+                        "~/Content/Sports.css", // Custom styles
+                        "~/Content/site.css")); // Global site styles
+                }
+                else
+                {
+                    // Handle the case where Bootstrap is not set
+                    // You might want to log this or set a default value
+                }
+            }
 
             // Enable optimizations for bundling and minification
             BundleTable.EnableOptimizations = true;
-        }
-
-        // Method to add Bootstrap theme bundle with a static path
-        private static void AddBootstrapThemeBundle(BundleCollection bundles)
-        {
-            // Hard-code the Bootstrap theme path
-            string bootstrapThemePath = "~/Content/bootstraptheme1.css"; // Example hard-coded path
-
-            // Add the bundle using the hard-coded theme path
-            bundles.Add(new StyleBundle("~/Content/bootstrap").Include(
-                        bootstrapThemePath));
         }
     }
 }

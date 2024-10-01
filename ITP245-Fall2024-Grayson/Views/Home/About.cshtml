@@ -1,12 +1,15 @@
-﻿@using ITP245_Fall2024_Grayson.Models;
+﻿@using ITP245_Fall2024_GraysonModel
 @model ITP245_Fall2024_Grayson.Models.Sports.cs.About
 
-<main aria-labelledby="title">
-    <h2 id="title">@Model.Name</h2>
+@{
+    ViewBag.Title = "About Me";
+}
+
+<main aria-labelledby="title" class="container border p-4 bg-light">
+    <h2 id="title" class="text-center">@Model.Name</h2>
     <h3>@ViewBag.Message</h3>
 
-    <!-- Contact Information with a border -->
-    <div class="contact-info">
+    <div class="contact-info border p-3 mb-4" style="border: 2px solid #007BFF; border-radius: 5px;">
         <address>
             <strong>Email:</strong>
             <a href="mailto:@Model.Email">@Model.Email</a><br />
@@ -15,38 +18,36 @@
         </address>
     </div>
 
-    <div class="container">
-        <div class="row">
-            <!-- Education Section -->
-            <div class="col-md-6">
-                <h3>Education</h3>
-                <p>@Model.Education</p>
-            </div>
+    <div class="row">
+        <!-- Education Section -->
+        <div class="col-md-6">
+            <h3>Education</h3>
+            <p>@Model.Education</p>
+        </div>
 
-            <!-- Experience Section with a Table -->
-            <div class="col-md-6">
-                <h3>Experience</h3>
-                <table class="table">
-                    <caption>Work Experience</caption>
-                    <thead>
+        <!-- Experience Section -->
+        <div class="col-md-6">
+            <h3>Experience</h3>
+            <table class="table table-bordered">
+                <caption>Work Experience Overview</caption>
+                <thead>
+                    <tr>
+                        <th>Job Title</th>
+                        <th>Company</th>
+                        <th>Years</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var experience in Model.Experiences)
+                    {
                         <tr>
-                            <th>Job Title</th>
-                            <th>Company</th>
-                            <th>Years</th>
+                            <td>@experience.JobTitle</td>
+                            <td>@experience.Company</td>
+                            <td>@experience.Years</td>
                         </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var experience in Model.Experiences)
-                        {
-                            <tr>
-                                <td>@experience.JobTitle</td>
-                                <td>@experience.Company</td>
-                                <td>@experience.Years</td>
-                            </tr>
-                        }
-                    </tbody>
-                </table>
-            </div>
+                    }
+                </tbody>
+            </table>
         </div>
     </div>
 </main>
