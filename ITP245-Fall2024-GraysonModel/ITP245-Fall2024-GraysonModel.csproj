@@ -91,6 +91,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>SportsModel.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Status.cs">
+      <DependentUpon>SportsModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="SystemOption.cs">
       <DependentUpon>SportsModel.tt</DependentUpon>
     </Compile>

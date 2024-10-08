@@ -10,13 +10,13 @@
 namespace ITP245_Fall2024_GraysonModel
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class SystemOption
+    public enum Status : int
     {
-        public int SystemOptionsID { get; set; }
-        public string Name { get; set; }
-        public string Semester { get; set; }
-        public string Bootstrap { get; set; }
+        Scheduled = 1,
+        Ongoing = 2,
+        Completed = 3,
+        Postponed = 4,
+        Cancelled = 5
     }
 }

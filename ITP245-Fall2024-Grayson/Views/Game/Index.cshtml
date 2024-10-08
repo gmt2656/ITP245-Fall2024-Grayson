@@ -1,0 +1,39 @@
+﻿@model IEnumerable<ITP245_Fall2024_GraysonModel.Game>
+
+@{
+    ViewBag.Title = "Games Index";
+}
+
+<h2>Games Index</h2>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Game Date</th>
+            <th>Game Time</th>
+            <th>Field</th>
+            <th>Status</th>
+            <th>Home Team</th>
+            <th>Visitor Team</th>
+            <th>Home Score</th>
+            <th>Visitor Score</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var game in Model)
+        {
+            <tr>
+                <td>@Html.ActionLink(game.GameDate, "Details", new { id = game.GameId })</td>
+                <td>@Html.ActionLink(game.GameTime, "Details", new { id = game.GameId })</td>
+                <td>@game.Field.Name</td>
+                <td>@game.StatusId.ToString()</td>
+                <td>@game.Team.Name</td>
+                <td>@game.Team1.Name</td>
+                <td>@game.HomeScore</td>
+                <td>@game.VisitorScore</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<p>End of the list of Games</p>

@@ -1,0 +1,45 @@
+﻿@model ITP245_Fall2024_GraysonModel.Game
+
+@{
+    ViewBag.Title = "Game Details";
+}
+
+<h2>Game Details</h2>
+
+<dl class="row">
+    <dt class="col-sm-3">Game Date</dt>
+    <dd class="col-sm-9">@Model.GameDate</dd>
+
+    <dt class="col-sm-3">Game Time</dt>
+    <dd class="col-sm-9">@Model.GameTime</dd>
+
+    <dt class="col-sm-3">Field</dt>
+    <dd class="col-sm-9">@Model.Field.Name</dd>
+
+    <dt class="col-sm-3">Status</dt>
+    <dd class="col-sm-9">@Model.StatusId.ToString()</dd>
+
+    <dt class="col-sm-3">Home Team</dt>
+    <dd class="col-sm-9">@Model.Team.Name</dd>
+
+    <dt class="col-sm-3">Visitor Team</dt>
+    <dd class="col-sm-9">@Model.Team1.Name</dd>
+
+    <dt class="col-sm-3">Home Score</dt>
+    <dd class="col-sm-9">@Model.HomeScore</dd>
+
+    <dt class="col-sm-3">Visitor Score</dt>
+    <dd class="col-sm-9">@Model.VisitorScore</dd>
+
+    <dt class="col-sm-3">Winner</dt>
+    <dd class="col-sm-9">@Model.Winner</dd>
+
+    <dt class="col-sm-3">Comment</dt>
+    <dd class="col-sm-9">@Model.Comment</dd>
+
+    <dt class="col-sm-3">Last Modified Date</dt>
+    <dd class="col-sm-9">@Model.LastModifiedDate</dd>
+
+    <dt class="col-sm-3">Last Modified Time</dt>
+    <dd class="col-sm-9">@Model.LastModifiedTime</dd>
+</dl>

@@ -19,7 +19,7 @@ namespace ITP245_Fall2024_GraysonModel
         public System.DateTime DateTime { get; set; }
         public int HomeTeamID { get; set; }
         public int VisitorTeamID { get; set; }
-        public int StatusId { get; set; }
+        public Status StatusId { get; set; }
         public int LastModifiedById { get; set; }
         public Nullable<System.DateTime> LastModified { get; set; }
         public Nullable<int> HomeScore { get; set; }

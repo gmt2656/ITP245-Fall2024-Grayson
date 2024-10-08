@@ -320,7 +320,7 @@
           <Property Name="DateTime" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="HomeTeamID" Type="Int32" Nullable="false" />
           <Property Name="VisitorTeamID" Type="Int32" Nullable="false" />
-          <Property Name="StatusId" Type="Int32" Nullable="false" />
+          <Property Name="StatusId" Type="SportsModel.Status" Nullable="false" />
           <Property Name="LastModifiedById" Type="Int32" Nullable="false" />
           <Property Name="LastModified" Type="DateTime" Precision="3" />
           <Property Name="HomeScore" Type="Int32" />
@@ -578,6 +578,13 @@
             <End Role="Roster" EntitySet="Rosters" />
           </AssociationSet>
         </EntityContainer>
+        <EnumType Name="Status">
+          <Member Name="Scheduled" Value="1" />
+          <Member Name="Ongoing" Value="2" />
+          <Member Name="Completed" Value="3" />
+          <Member Name="Postponed" Value="4" />
+          <Member Name="Cancelled" Value="5" />
+        </EnumType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
