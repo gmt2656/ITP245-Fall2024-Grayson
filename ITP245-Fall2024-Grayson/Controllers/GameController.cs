@@ -1,38 +1,71 @@
 ﻿using ITP245_Fall2024_GraysonModel;
-using System.Data.Entity;
+using System;
 using System.Linq;
 using System.Web.Mvc;
 
-public class GameController : Controller
+namespace ITP245_Fall2024_Grayson.Controllers
 {
-    private SportsEntities db = new SportsEntities();
-
-    // GET: Game
-    public ActionResult Index()
+    public class GameController : Controller
     {
-        var games = db.Games
-            .Include(g => g.Team) // Home Team
-            .Include(g => g.Team1) // Visitor Team
-            .Include(g => g.Field)
-            .OrderBy(g => g.DateTime)
-            .ThenBy(g => g.Team.Name)
-            .ThenBy(g => g.Team1.Name)
-            .ToList();
-        return View(games);
-    }
+        private SportsEntities db = new SportsEntities();
 
-    // GET: Game/Details/5
-    public ActionResult Details(int id)
-    {
-        var game = db.Games
-            .Include(g => g.Team) // Home Team
-            .Include(g => g.Team1) // Visitor Team
-            .Include(g => g.Field)
-            .FirstOrDefault(g => g.GameId == id);
-        if (game == null)
+        // GET: Game
+        public ActionResult Index()
         {
-            return HttpNotFound();
+            // Get the list of valid Game Status values
+            var statuses = Enum.GetValues(typeof(Status))
+                               .Cast<Status>()
+                               .Select(s => new SelectListItem
+                               {
+                                   Text = s.ToString(),
+                                   Value = ((int)s).ToString()
+                               }).ToList();
+
+            ViewBag.Statuses = statuses;
+
+            // Get the list of all games
+            var games = db.Games
+                          .Include("Team")   // Home Team
+                          .Include("Team1")  // Visitor Team
+                          .Include("Field")
+                          .ToList();
+
+            return View(games);
         }
-        return View(game);
+
+        // GET: Game/_Index
+        public ActionResult _Index(int? id)
+        {
+            var games = db.Games
+                          .Include("Team")   // Home Team
+                          .Include("Team1")  // Visitor Team
+                          .Include("Field")
+                          .AsQueryable();
+
+            if (id.HasValue && id.Value != 0)
+            {
+                // Filter games by the selected Game Status ID
+                games = games.Where(g => (int)g.StatusId == id.Value);
+            }
+
+            return PartialView(games.ToList());
+        }
+
+        // GET: Game/Details/5
+        public ActionResult Details(int id)
+        {
+            var game = db.Games
+                         .Include("Team")   // Home Team
+                         .Include("Team1")  // Visitor Team
+                         .Include("Field")
+                         .FirstOrDefault(g => g.GameId == id);
+
+            if (game == null)
+            {
+                return HttpNotFound();
+            }
+
+            return View(game);
+        }
     }
 }

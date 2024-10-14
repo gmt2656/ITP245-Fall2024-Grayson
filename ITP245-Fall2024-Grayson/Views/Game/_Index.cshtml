@@ -1,0 +1,46 @@
+﻿@model IEnumerable<ITP245_Fall2024_GraysonModel.Game>
+@using ITP245_Fall2024_GraysonModel
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Game Date</th>
+            <th>Game Time</th>
+            <th>Field</th>
+            <th>Status</th>
+            <th>Home Team</th>
+            <th>Visitor Team</th>
+            <th>Home Score</th>
+            <th>Visitor Score</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var game in Model)
+        {
+            <tr>
+                <td>
+                    @Html.ActionLink(
+                        game.GameDate,
+                        "Details",
+                        "Game",
+                        new { id = game.GameId },
+                        null)
+                </td>
+                <td>
+                    @Html.ActionLink(
+                        game.GameTime,
+                        "Details",
+                        "Game",
+                        new { id = game.GameId },
+                        null)
+                </td>
+                <td>@(game.Field?.Name ?? "N/A")</td>
+                <td>@game.StatusId.ToString()</td>
+                <td>@(game.Team?.Name ?? "N/A")</td>
+                <td>@(game.Team1?.Name ?? "N/A")</td>
+                <td>@(game.HomeScore?.ToString() ?? "N/A")</td>
+                <td>@(game.VisitorScore?.ToString() ?? "N/A")</td>
+            </tr>
+        }
+    </tbody>
+</table>

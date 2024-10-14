@@ -1,0 +1,27 @@
+﻿@model IEnumerable<ITP245_Fall2024_GraysonModel.Team>
+@{
+    ViewBag.Title = "Teams";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<div id="teams-list">
+    @foreach (var team in Model)
+    {
+        <button class="team-button" data-team-id="@team.TeamId">@team.Name</button>
+    }
+</div>
+
+<div id="team-details"></div>
+
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).on('click', '.team-button', function () {
+            var teamId = $(this).data('team-id');
+            $.get('@Url.Action("Details", "Team")', { id: teamId }, function (data) {
+                $('#team-details').html(data);
+            });
+        });
+    </script>
+}

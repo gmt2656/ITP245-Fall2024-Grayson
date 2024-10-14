@@ -1,4 +1,5 @@
 ﻿@model IEnumerable<ITP245_Fall2024_GraysonModel.Game>
+@using ITP245_Fall2024_GraysonModel
 
 @{
     ViewBag.Title = "Games Index";
@@ -7,46 +8,32 @@
 <h2>Games Index</h2>
 
 <div>
-    @foreach (var status in ViewBag.Statuses as string[])
+    @if (ViewBag.Statuses != null)
     {
-        <label>
-            <input type="radio" name="status" value="@status" class="status-filter" /> @status
-        </label>
+        foreach (var status in ViewBag.Statuses as List<SelectListItem>)
+        {
+            <label>
+                <input type="radio" name="status" value="@status.Value" class="status-filter" /> @status.Text
+            </label>
+        }
     }
     <label>
-        <input type="radio" name="status" value="All" class="status-filter" checked="checked" /> All
+        <input type="radio" name="status" value="0" class="status-filter" checked="checked" /> All
     </label>
 </div>
 
 <div id="games-list">
-<table class="table table-bordered">
-    <thead>
-        <tr>
-            <th>Game Date</th>
-            <th>Game Time</th>
-            <th>Field</th>
-            <th>Status</th>
-            <th>Home Team</th>
-            <th>Visitor Team</th>
-            <th>Home Score</th>
-            <th>Visitor Score</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var game in Model)
-        {
-            <tr>
-                <td>@Html.ActionLink(game.GameDate, "Details", new { id = game.GameId })</td>
-                <td>@Html.ActionLink(game.GameTime, "Details", new { id = game.GameId })</td>
-                <td>@game.Field.Name</td>
-                <td>@game.StatusId.ToString()</td>
-                <td>@game.Team.Name</td>
-                <td>@game.Team1.Name</td>
-                <td>@game.HomeScore</td>
-                <td>@game.VisitorScore</td>
-            </tr>
-        }
-    </tbody>
-</table>
+    @Html.Partial("_Index", Model)
+</div>
 
-<p>End of the list of Games</p>
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).on('change', '.status-filter', function () {
+            var statusId = $('input[name="status"]:checked').val();
+            $.get('@Url.Action("_Index", "Game")', { id: statusId }, function (data) {
+                $('#games-list').html(data);
+            });
+        });
+    </script>
+}

@@ -1,0 +1,19 @@
+﻿@model ITP245_Fall2024_GraysonModel.Team
+
+<h3>@Model.Name</h3>
+
+<h4>Players:</h4>
+<ul>
+    @foreach (var player in Model.Rosters.Select(r => r.Player))
+    {
+        <li>@player.FirstName @player.LastName</li>
+    }
+</ul>
+
+<h4>Schedule:</h4>
+<ul>
+    @foreach (var game in Model.Games.Concat(Model.Games1))
+    {
+        <li>@game.DateTime.ToString("MM/dd/yyyy hh:mm tt") - @game.Team.Name vs @game.Team1.Name</li>
+    }
+</ul>
