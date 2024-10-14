@@ -6,6 +6,19 @@
 
 <h2>Games Index</h2>
 
+<div>
+    @foreach (var status in ViewBag.Statuses as string[])
+    {
+        <label>
+            <input type="radio" name="status" value="@status" class="status-filter" /> @status
+        </label>
+    }
+    <label>
+        <input type="radio" name="status" value="All" class="status-filter" checked="checked" /> All
+    </label>
+</div>
+
+<div id="games-list">
 <table class="table table-bordered">
     <thead>
         <tr>
