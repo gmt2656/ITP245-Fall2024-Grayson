@@ -12,19 +12,19 @@ namespace ITP245_Fall2024_GraysonModel
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
-
+    
     public partial class SportsEntities : DbContext
     {
         public SportsEntities()
             : base("name=SportsEntities")
         {
         }
-
+    
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             throw new UnintentionalCodeFirstException();
         }
-
+    
         public virtual DbSet<SystemOption> SystemOptions { get; set; }
         public virtual DbSet<Division> Divisions { get; set; }
         public virtual DbSet<Field> Fields { get; set; }

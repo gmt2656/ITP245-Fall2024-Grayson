@@ -38,10 +38,10 @@ namespace ITP245_Fall2024_GraysonModel
             public int DivisionId { get; set; }
 
             [Display(Name = "Manager")]
-            public int ManagerId { get; set; }
+            public int ManagerID { get; set; }
 
             [Display(Name = "Asst Manager")]
-            public int AssistantManagerId { get; set; }
+            public int AssistantManagerID { get; set; }
 
             [Display(Name = "Short Name")]
             public string ShortName { get; set; }

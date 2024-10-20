@@ -1,16 +1,14 @@
 ﻿@model IEnumerable<ITP245_Fall2024_GraysonModel.Game>
 @using ITP245_Fall2024_GraysonModel
-
 @{
     ViewBag.Title = "Games Index";
+    var statuses = ViewBag.Statuses as List<SelectListItem>;
 }
-
-<h2>Games Index</h2>
-
+<h2>@ViewBag.Title</h2>
 <div>
-    @if (ViewBag.Statuses != null)
+    @if (statuses != null)
     {
-        foreach (var status in ViewBag.Statuses as List<SelectListItem>)
+        foreach (var status in statuses)
         {
             <label>
                 <input type="radio" name="status" value="@status.Value" class="status-filter" /> @status.Text
@@ -21,11 +19,9 @@
         <input type="radio" name="status" value="0" class="status-filter" checked="checked" /> All
     </label>
 </div>
-
 <div id="games-list">
     @Html.Partial("_Index", Model)
 </div>
-
 @section Scripts {
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>

@@ -1,5 +1,6 @@
 ﻿using ITP245_Fall2024_GraysonModel;
 using System;
+using System.Data.Entity;
 using System.Linq;
 using System.Web.Mvc;
 
@@ -20,14 +21,14 @@ namespace ITP245_Fall2024_Grayson.Controllers
                                    Text = s.ToString(),
                                    Value = ((int)s).ToString()
                                }).ToList();
-
             ViewBag.Statuses = statuses;
 
-            // Get the list of all games
+            // Get the list of all games and order by StatusId
             var games = db.Games
-                          .Include("Team")   // Home Team
-                          .Include("Team1")  // Visitor Team
+                          .Include("Team")    // Home Team
+                          .Include("Team1")   // Visitor Team
                           .Include("Field")
+                          .OrderBy(g => g.StatusId)
                           .ToList();
 
             return View(games);
@@ -36,27 +37,30 @@ namespace ITP245_Fall2024_Grayson.Controllers
         // GET: Game/_Index
         public ActionResult _Index(int? id)
         {
-            var games = db.Games
-                          .Include("Team")   // Home Team
-                          .Include("Team1")  // Visitor Team
-                          .Include("Field")
-                          .AsQueryable();
+            var gamesQuery = db.Games
+                               .Include("Team")    // Home Team
+                               .Include("Team1")   // Visitor Team
+                               .Include("Field")
+                               .AsQueryable();
 
             if (id.HasValue && id.Value != 0)
             {
                 // Filter games by the selected Game Status ID
-                games = games.Where(g => (int)g.StatusId == id.Value);
+                gamesQuery = gamesQuery.Where(g => (int)g.StatusId == id.Value);
             }
 
-            return PartialView(games.ToList());
+            // Order the games by StatusId
+            var games = gamesQuery.OrderBy(g => g.StatusId).ToList();
+
+            return PartialView(games);
         }
 
         // GET: Game/Details/5
         public ActionResult Details(int id)
         {
             var game = db.Games
-                         .Include("Team")   // Home Team
-                         .Include("Team1")  // Visitor Team
+                         .Include("Team")    // Home Team
+                         .Include("Team1")   // Visitor Team
                          .Include("Field")
                          .FirstOrDefault(g => g.GameId == id);
 
@@ -66,6 +70,16 @@ namespace ITP245_Fall2024_Grayson.Controllers
             }
 
             return View(game);
+        }
+
+        // Optional: Dispose method to release database resources
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                db.Dispose();
+            }
+            base.Dispose(disposing);
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿// T4 code generation is enabled for model 'C:\Users\HP\OneDrive - Virginia's Community Colleges\ITP 245 Developing User Interfaces\ITP245-Fall2024-Grayson\ITP245-Fall2024-GraysonModel\SportsModel.edmx'. 
+﻿// T4 code generation is enabled for model 'C:\Users\HP\OneDrive\ITP 245 Developing User Interfaces\ITP245-Fall2024-Grayson\ITP245-Fall2024-GraysonModel\SportsModel.edmx'. 
 // To enable legacy code generation, change the value of the 'Code Generation Strategy' designer
 // property to 'Legacy ObjectContext'. This property is available in the Properties Window when the model
 // is open in the designer.

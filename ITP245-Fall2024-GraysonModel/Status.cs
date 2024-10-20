@@ -14,9 +14,7 @@ namespace ITP245_Fall2024_GraysonModel
     public enum Status : int
     {
         Scheduled = 1,
-        Ongoing = 2,
-        Completed = 3,
-        Postponed = 4,
-        Cancelled = 5
+        Completed = 2,
+        Cancelled = 3
     }
 }

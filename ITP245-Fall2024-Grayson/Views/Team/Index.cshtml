@@ -5,19 +5,39 @@
 
 <h2>@ViewBag.Title</h2>
 
-<div id="teams-list">
-    @foreach (var team in Model)
-    {
-        <button class="team-button" data-team-id="@team.TeamId">@team.Name</button>
-    }
-</div>
+<p>
+    @Html.ActionLink("Create New Team", "Create", null, new { @class = "btn btn-success" })
+</p>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Team Name</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var team in Model)
+        {
+            <tr>
+                <td>@team.Name</td>
+                <td>
+                    <a href="#" class="btn btn-info team-button" data-team-id="@team.TeamId">Details</a>
+                    @Html.ActionLink("Edit", "Edit", new { id = team.TeamId }, new { @class = "btn btn-primary" })
+                    @Html.ActionLink("Delete", "Delete", new { id = team.TeamId }, new { @class = "btn btn-danger" })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
 
 <div id="team-details"></div>
 
 @section Scripts {
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
-        $(document).on('click', '.team-button', function () {
+        $(document).on('click', '.team-button', function (e) {
+            e.preventDefault();
             var teamId = $(this).data('team-id');
             $.get('@Url.Action("Details", "Team")', { id: teamId }, function (data) {
                 $('#team-details').html(data);

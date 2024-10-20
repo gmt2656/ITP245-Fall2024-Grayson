@@ -580,10 +580,8 @@
         </EntityContainer>
         <EnumType Name="Status">
           <Member Name="Scheduled" Value="1" />
-          <Member Name="Ongoing" Value="2" />
-          <Member Name="Completed" Value="3" />
-          <Member Name="Postponed" Value="4" />
-          <Member Name="Cancelled" Value="5" />
+          <Member Name="Completed" Value="2" />
+          <Member Name="Cancelled" Value="3" />
         </EnumType>
       </Schema>
     </edmx:ConceptualModels>
