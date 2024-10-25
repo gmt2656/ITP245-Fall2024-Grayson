@@ -1,6 +1,7 @@
 ﻿@model IEnumerable<ITP245_Fall2024_GraysonModel.Team>
+
 @{
-    ViewBag.Title = "Teams";
+    ViewBag.Title = "Teams Index";
 }
 
 <h2>@ViewBag.Title</h2>
@@ -9,10 +10,11 @@
     @Html.ActionLink("Create New Team", "Create", null, new { @class = "btn btn-success" })
 </p>
 
-<table class="table table-striped">
+<table class="table table-striped table-bordered">
     <thead>
         <tr>
             <th>Team Name</th>
+            <th>Division</th>
             <th>Actions</th>
         </tr>
     </thead>
@@ -20,27 +22,44 @@
         @foreach (var team in Model)
         {
             <tr>
-                <td>@team.Name</td>
                 <td>
-                    <a href="#" class="btn btn-info team-button" data-team-id="@team.TeamId">Details</a>
-                    @Html.ActionLink("Edit", "Edit", new { id = team.TeamId }, new { @class = "btn btn-primary" })
-                    @Html.ActionLink("Delete", "Delete", new { id = team.TeamId }, new { @class = "btn btn-danger" })
+                    <a href="#" class="team-link" data-team-id="@team.TeamId">@team.Name</a>
+                </td>
+                <td>
+                    @(team.Division != null ? team.Division.Name : "N/A")
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = team.TeamId }, new { @class = "btn btn-primary btn-sm" })
+                    @Html.ActionLink("Delete", "Delete", new { id = team.TeamId }, new { @class = "btn btn-danger btn-sm" })
                 </td>
             </tr>
         }
     </tbody>
 </table>
 
-<div id="team-details"></div>
+<div id="team-details">
+    <!-- Team details will be loaded here -->
+</div>
 
 @section Scripts {
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
-        $(document).on('click', '.team-button', function (e) {
-            e.preventDefault();
-            var teamId = $(this).data('team-id');
-            $.get('@Url.Action("Details", "Team")', { id: teamId }, function (data) {
-                $('#team-details').html(data);
+        $(document).ready(function () {
+            // Handle click event on team links
+            $(document).on('click', '.team-link', function (e) {
+                e.preventDefault();
+                var teamId = $(this).data('team-id');
+                $.ajax({
+                    url: '@Url.Action("Details", "Team")',
+                    data: { id: teamId },
+                    type: "GET",
+                    success: function (data) {
+                        $('#team-details').html(data);
+                    },
+                    error: function () {
+                        alert('Error loading team details.');
+                    }
+                });
             });
         });
     </script>

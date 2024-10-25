@@ -4,8 +4,7 @@
 @{
     // Get today's date for versioning and deployment
     var today = DateTime.Now;
-    var versionNumber = $"{today.Year}.{today.Month}.{today.Day}.0"; // Example format: 2024.10.7.0
-    var deploymentDate = today.ToString("yyyy-MM-dd"); // Deployment date format
+    var versionNumber = today.ToString("MM.dd.yy"); // Example format: 10.26.24
     var themeFile = "theme3.css"; // Default theme file
 
     using (var entities = new SportsEntities())
@@ -26,6 +25,8 @@
     <title>@ViewBag.Title - Grayson’s Sports Application</title>
     <link rel="stylesheet" href="~/Content/@themeFile" /> <!-- Use theme CSS -->
     <link rel="stylesheet" href="~/Content/Sports.css" />
+    <!-- Include Bootstrap CSS (if not included in themeFile) -->
+    <link rel="stylesheet" href="~/Content/bootstrap.min.css" />
 </head>
 <body>
     <!-- Navigation Menu -->
@@ -57,7 +58,6 @@
             </div>
         </div>
     </nav>
-
     <!-- Main Content -->
     <div class="container body-content">
         @RenderBody()
@@ -66,10 +66,14 @@
             <p>&copy; @DateTime.Now.Year - Grayson’s Sports Application v @versionNumber</p>
         </footer>
     </div>
-
     <!-- Scripts -->
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    <!-- Alternatively, include scripts directly -->
+    <!--
     <script src="~/Scripts/jquery-3.6.0.min.js"></script>
     <script src="~/Scripts/bootstrap.bundle.min.js"></script>
+    -->
     @RenderSection("scripts", required: false)
 </body>
 </html>

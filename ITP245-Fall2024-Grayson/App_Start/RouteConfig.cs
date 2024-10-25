@@ -18,7 +18,7 @@ namespace ITP245_Fall2024_Grayson
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
             );
 
-            // Optional: Additional route for games
+            // Additional route for games (optional)
             routes.MapRoute(
                 name: "Games",
                 url: "Games/{action}/{id}",

@@ -20,20 +20,13 @@
             <tr>
                 <td>
                     @Html.ActionLink(
-                        game.GameDate,
+                        game.DateTime.ToString("MM/dd/yyyy"),
                         "Details",
                         "Game",
                         new { id = game.GameId },
                         null)
                 </td>
-                <td>
-                    @Html.ActionLink(
-                        game.GameTime,
-                        "Details",
-                        "Game",
-                        new { id = game.GameId },
-                        null)
-                </td>
+                <td>@game.DateTime.ToString("hh:mm tt")</td> <!-- Game Time as plain text -->
                 <td>@(game.Field?.Name ?? "N/A")</td>
                 <td>@game.StatusId.ToString()</td>
                 <td>@(game.Team?.Name ?? "N/A")</td>
