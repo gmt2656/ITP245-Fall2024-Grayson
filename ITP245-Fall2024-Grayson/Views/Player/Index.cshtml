@@ -1,0 +1,68 @@
+﻿@model IEnumerable<ITP245_Fall2024_GraysonModel.Player>
+
+@{
+    ViewBag.Title = "Players Index";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<p>
+    @Html.ActionLink("Create New Player", "Create", null, new { @class = "btn btn-success" })
+</p>
+
+<table class="table table-striped table-bordered">
+    <thead>
+        <tr>
+            <th style="width: 15%;">Team</th>
+            <th style="width: 25%;">Name</th>
+            <th style="width: 20%;">Email</th>
+            <th style="width: 15%;">Phone</th>
+            <th style="width: 15%;">Manager</th>
+            <th style="width: 10%;">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            var teams = Model.SelectMany(p => p.Rosters.Select(r => r.Team)).Distinct().OrderBy(t => t.Name);
+        }
+
+        @foreach (var team in teams)
+        {
+            <tr>
+                <th colspan="6">@team.Name</th>
+            </tr>
+            foreach (var player in Model.Where(p => p.Rosters.Any(r => r.TeamId == team.TeamId)))
+            {
+                <tr>
+                    <td></td> <!-- Empty cell for team column -->
+                    <td>
+                        @Html.ActionLink(
+                            $"{player.FirstName} {player.LastName}",
+                            "Details",
+                            new { id = player.PlayerId },
+                            null)
+                    </td>
+                    <td>@(player.Email ?? "N/A")</td>
+                    <td>@(player.Phone ?? "N/A")</td>
+                    <td>
+                        @foreach (var roster in player.Rosters)
+                        {
+                            if (roster.Team.ManagerID == player.PlayerId)
+                            {
+                                <div>Manager</div>
+                            }
+                            else if (roster.Team.AssistantManagerID == player.PlayerId)
+                            {
+                                <div>Assistant Manager</div>
+                            }
+                        }
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new { id = player.PlayerId }, new { @class = "btn btn-primary btn-sm" })
+                        @Html.ActionLink("Delete", "Delete", new { id = player.PlayerId }, new { @class = "btn btn-danger btn-sm" })
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>

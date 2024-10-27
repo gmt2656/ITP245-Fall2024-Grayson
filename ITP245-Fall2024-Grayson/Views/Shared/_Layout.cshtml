@@ -43,6 +43,9 @@
                         @Html.ActionLink("Home", "Index", "Home", null, new { @class = "nav-link" })
                     </li>
                     <li class="nav-item">
+                        @Html.ActionLink("Players", "Index", "Player", null, new { @class = "nav-link" })
+                    </li>
+                    <li class="nav-item">
                         @Html.ActionLink("Games", "Index", "Game", null, new { @class = "nav-link" })
                     </li>
                     <li class="nav-item">
@@ -63,7 +66,7 @@
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year - Grayson’s Sports Application v @versionNumber</p>
+            <p>&copy; @DateTime.Now.Year - Grayson’s Sports Application v @versionNumber.0</p>
         </footer>
     </div>
     <!-- Scripts -->

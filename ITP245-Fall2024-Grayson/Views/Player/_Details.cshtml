@@ -1,0 +1,107 @@
+﻿@model ITP245_Fall2024_GraysonModel.Player
+
+@{
+    ViewBag.Title = "Player Details";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<h3>
+    @Model.FirstName @Model.LastName
+</h3>
+
+<table class="table table-bordered">
+    <tr>
+        <th>First Name</th>
+        <td>@Model.FirstName</td>
+    </tr>
+    <tr>
+        <th>Last Name</th>
+        <td>@Model.LastName</td>
+    </tr>
+    <tr>
+        <th>Nickname</th>
+        <td>@(Model.NickName ?? "N/A")</td>
+    </tr>
+    <tr>
+        <th>Email</th>
+        <td>@(Model.Email ?? "N/A")</td>
+    </tr>
+    <tr>
+        <th>Phone</th>
+        <td>@(Model.Phone ?? "N/A")</td>
+    </tr>
+    <tr>
+        <th>Birth Date</th>
+        <td>@(Model.BirthDate?.ToString("MM/dd/yyyy") ?? "N/A")</td>
+    </tr>
+    <tr>
+        <th>City</th>
+        <td>@(Model.City ?? "N/A")</td>
+    </tr>
+    <tr>
+        <th>Zip Code</th>
+        <td>@(Model.ZipCode ?? "N/A")</td>
+    </tr>
+    <tr>
+        <th>Shirt Size</th>
+        <td>@(Model.ShirtSize ?? "N/A")</td>
+    </tr>
+    <tr>
+        <th>Emergency Contact</th>
+        <td>@(Model.EmergencyContact ?? "N/A")</td>
+    </tr>
+    <tr>
+        <th>Emergency Phone</th>
+        <td>@(Model.EmergencyPhone ?? "N/A")</td>
+    </tr>
+    <tr>
+        <th>Active Player</th>
+        <td>@(Model.IsActivePlayer ? "Yes" : "No")</td>
+    </tr>
+    <tr>
+        <th>Leadership Team Manager</th>
+        <td>
+            @if (Model.IsLeadershipTeamManager.HasValue)
+            {
+                @(Model.IsLeadershipTeamManager.Value ? "Yes" : "No")
+            }
+            else
+            {
+                <span>Unknown</span>
+            }
+        </td>
+    </tr>
+</table>
+
+<!-- Teams the Player is On -->
+<h4>Teams</h4>
+@if (Model.Rosters.Any())
+{
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Team Name</th>
+                <th>Division</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var roster in Model.Rosters)
+            {
+                <tr>
+                    <td>@(roster.Team?.Name ?? "N/A")</td>
+                    <td>@(roster.Team?.Division?.Name ?? "N/A")</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>This player is not on any teams.</p>
+}
+
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.PlayerId }, new { @class = "btn btn-primary" }) |
+    @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-secondary" })
+</p>
