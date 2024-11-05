@@ -45,21 +45,39 @@ namespace ITP245_Fall2024_Grayson.Controllers
         // GET: Player/Create
         public ActionResult Create()
         {
+            ViewBag.TeamList = new SelectList(db.Teams, "TeamId", "Name");
             return View();
         }
 
         // POST: Player/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "FirstName,LastName,NickName,Email,Phone,BirthDate,City,ZipCode,ShirtSize,EmergencyContact,EmergencyPhone,IsActivePlayer,IsLeadershipTeamManager")] Player player)
+        public ActionResult Create(Player player, int[] SelectedTeamIds)
         {
             if (ModelState.IsValid)
             {
                 db.Players.Add(player);
                 db.SaveChanges();
+
+                // If teams were selected, create roster entries
+                if (SelectedTeamIds != null)
+                {
+                    foreach (var teamId in SelectedTeamIds)
+                    {
+                        var roster = new Roster
+                        {
+                            PlayerId = player.PlayerId,
+                            TeamId = teamId
+                        };
+                        db.Rosters.Add(roster);
+                    }
+                    db.SaveChanges();
+                }
+
                 return RedirectToAction("Index");
             }
 
+            ViewBag.TeamList = new SelectList(db.Teams, "TeamId", "Name");
             return View(player);
         }
 
@@ -71,28 +89,59 @@ namespace ITP245_Fall2024_Grayson.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            var player = db.Players.Find(id);
+            var player = db.Players
+                           .Include(p => p.Rosters)
+                           .FirstOrDefault(p => p.PlayerId == id);
 
             if (player == null)
             {
                 return HttpNotFound();
             }
 
+            ViewBag.TeamList = new SelectList(db.Teams, "TeamId", "Name");
+            ViewBag.SelectedTeamIds = player.Rosters.Select(r => r.TeamId).ToArray();
             return View(player);
         }
 
         // POST: Player/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "PlayerId,FirstName,LastName,NickName,Email,Phone,BirthDate,City,ZipCode,ShirtSize,EmergencyContact,EmergencyPhone,IsActivePlayer,IsLeadershipTeamManager")] Player player)
+        public ActionResult Edit(Player player, int[] SelectedTeamIds)
         {
             if (ModelState.IsValid)
             {
+                // Update player details
                 db.Entry(player).State = EntityState.Modified;
+                db.SaveChanges();
+
+                // Update rosters
+                // Remove existing rosters for this player
+                var existingRosters = db.Rosters.Where(r => r.PlayerId == player.PlayerId).ToList();
+                foreach (var roster in existingRosters)
+                {
+                    db.Rosters.Remove(roster);
+                }
+
+                // Add new rosters based on selected teams
+                if (SelectedTeamIds != null)
+                {
+                    foreach (var teamId in SelectedTeamIds)
+                    {
+                        var roster = new Roster
+                        {
+                            PlayerId = player.PlayerId,
+                            TeamId = teamId
+                        };
+                        db.Rosters.Add(roster);
+                    }
+                }
+
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
+            ViewBag.TeamList = new SelectList(db.Teams, "TeamId", "Name");
+            ViewBag.SelectedTeamIds = player.Rosters.Select(r => r.TeamId).ToArray();
             return View(player);
         }
 
@@ -104,7 +153,9 @@ namespace ITP245_Fall2024_Grayson.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            var player = db.Players.Find(id);
+            var player = db.Players
+                           .Include(p => p.Rosters.Select(r => r.Team)) // Include team information
+                           .FirstOrDefault(p => p.PlayerId == id);
 
             if (player == null)
             {
@@ -113,6 +164,7 @@ namespace ITP245_Fall2024_Grayson.Controllers
 
             return View(player);
         }
+
 
         // POST: Player/Delete/5
         [HttpPost, ActionName("Delete")]

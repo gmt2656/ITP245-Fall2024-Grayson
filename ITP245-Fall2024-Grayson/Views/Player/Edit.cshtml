@@ -26,13 +26,6 @@
         @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
     </div>
 
-    <!-- Nickname -->
-    <div class="form-group">
-        @Html.LabelFor(model => model.NickName)
-        @Html.EditorFor(model => model.NickName, new { htmlAttributes = new { @class = "form-control" } })
-        @Html.ValidationMessageFor(model => model.NickName, "", new { @class = "text-danger" })
-    </div>
-
     <!-- Email -->
     <div class="form-group">
         @Html.LabelFor(model => model.Email)
@@ -68,13 +61,6 @@
         @Html.ValidationMessageFor(model => model.ZipCode, "", new { @class = "text-danger" })
     </div>
 
-    <!-- Shirt Size -->
-    <div class="form-group">
-        @Html.LabelFor(model => model.ShirtSize)
-        @Html.EditorFor(model => model.ShirtSize, new { htmlAttributes = new { @class = "form-control" } })
-        @Html.ValidationMessageFor(model => model.ShirtSize, "", new { @class = "text-danger" })
-    </div>
-
     <!-- Emergency Contact -->
     <div class="form-group">
         @Html.LabelFor(model => model.EmergencyContact)
@@ -89,16 +75,16 @@
         @Html.ValidationMessageFor(model => model.EmergencyPhone, "", new { @class = "text-danger" })
     </div>
 
-    <!-- Is Active Player -->
+    <!-- Active Player -->
     <div class="form-group">
-        @Html.LabelFor(model => model.IsActivePlayer)
+        @Html.Label("Active Player")
         @Html.CheckBoxFor(model => model.IsActivePlayer, new { @class = "form-check-input" })
         @Html.ValidationMessageFor(model => model.IsActivePlayer, "", new { @class = "text-danger" })
     </div>
 
-    <!-- Is Leadership Team Manager -->
+    <!-- Leadership Team Manager -->
     <div class="form-group">
-        @Html.LabelFor(model => model.IsLeadershipTeamManager)
+        @Html.Label("Leadership Team Manager")
         @if (Model != null)
         {
             bool isChecked = Model.IsLeadershipTeamManager ?? false;
@@ -109,7 +95,13 @@
         @Html.ValidationMessageFor(model => model.IsLeadershipTeamManager, "", new { @class = "text-danger" })
     </div>
 
-    <!-- Submit and Back to List Buttons -->
+    <!-- Teams (Rosters) -->
+    <div class="form-group">
+        @Html.Label("Team")
+        @Html.ListBox("SelectedTeamIds", new MultiSelectList(ViewBag.TeamList, "Value", "Text", ViewBag.SelectedTeamIds), new { @class = "form-control" })
+    </div>
+
+    <!-- Submit Button -->
     <input type="submit" value="Save" class="btn btn-primary" />
     @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-secondary" })
 }

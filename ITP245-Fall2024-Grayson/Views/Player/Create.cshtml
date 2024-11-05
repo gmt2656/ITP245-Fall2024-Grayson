@@ -25,13 +25,6 @@
         @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
     </div>
 
-    <!-- Nickname -->
-    <div class="form-group">
-        @Html.LabelFor(model => model.NickName)
-        @Html.EditorFor(model => model.NickName, new { htmlAttributes = new { @class = "form-control" } })
-        @Html.ValidationMessageFor(model => model.NickName, "", new { @class = "text-danger" })
-    </div>
-
     <!-- Email -->
     <div class="form-group">
         @Html.LabelFor(model => model.Email)
@@ -67,13 +60,6 @@
         @Html.ValidationMessageFor(model => model.ZipCode, "", new { @class = "text-danger" })
     </div>
 
-    <!-- Shirt Size -->
-    <div class="form-group">
-        @Html.LabelFor(model => model.ShirtSize)
-        @Html.EditorFor(model => model.ShirtSize, new { htmlAttributes = new { @class = "form-control" } })
-        @Html.ValidationMessageFor(model => model.ShirtSize, "", new { @class = "text-danger" })
-    </div>
-
     <!-- Emergency Contact -->
     <div class="form-group">
         @Html.LabelFor(model => model.EmergencyContact)
@@ -88,26 +74,10 @@
         @Html.ValidationMessageFor(model => model.EmergencyPhone, "", new { @class = "text-danger" })
     </div>
 
-    <!-- Is Active Player -->
-    <div class="form-group">
-        @Html.LabelFor(model => model.IsActivePlayer)
-        @Html.CheckBoxFor(model => model.IsActivePlayer, new { @class = "form-check-input" })
-        @Html.ValidationMessageFor(model => model.IsActivePlayer, "", new { @class = "text-danger" })
-    </div>
+    <!-- Active Player --> <div class="form-group"> @Html.Label("Active Player") @Html.CheckBoxFor(model => model.IsActivePlayer, new { @class = "form-check-input" }) @Html.ValidationMessageFor(model => model.IsActivePlayer, "", new { @class = "text-danger" }) </div> <!-- Leadership Team Manager --> <div class="form-group"> @Html.Label("Leadership Team Manager") @{ bool isChecked = Model?.IsLeadershipTeamManager ?? false; } <!-- Hidden field to ensure false is posted when the checkbox is unchecked --> @Html.Hidden("IsLeadershipTeamManager", false) @Html.CheckBox("IsLeadershipTeamManager", isChecked, new { @class = "form-check-input" }) @Html.ValidationMessageFor(model => model.IsLeadershipTeamManager, "", new { @class = "text-danger" }) </div>
 
-    <!-- Is Leadership Team Manager -->
-    <div class="form-group">
-        @Html.LabelFor(model => model.IsLeadershipTeamManager)
-        @{
-            bool isChecked = Model?.IsLeadershipTeamManager ?? false;
-        }
-        <!-- Hidden field to ensure false is posted when the checkbox is unchecked -->
-        @Html.Hidden("IsLeadershipTeamManager", false)
-        @Html.CheckBox("IsLeadershipTeamManager", isChecked, new { @class = "form-check-input" })
-        @Html.ValidationMessageFor(model => model.IsLeadershipTeamManager, "", new { @class = "text-danger" })
-    </div>
-
-    <!-- Submit and Back to List Buttons -->
+    <!-- Teams (Rosters) --> <div class="form-group"> @Html.Label("Team") @Html.ListBox("SelectedTeamIds", (SelectList)ViewBag.TeamList, new { @class = "form-control" }) </div> <!-- Submit Button -->
     <input type="submit" value="Create" class="btn btn-success" />
+
     @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-secondary" })
 }

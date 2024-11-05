@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<ITP245_Fall2024_GraysonModel.Player>
 
 @{
-    ViewBag.Title = "Players Index";
+    ViewBag.Title = "Players";
 }
 
 <h2>@ViewBag.Title</h2>
@@ -23,9 +23,18 @@
     </thead>
     <tbody>
         @{
-            var teams = Model.SelectMany(p => p.Rosters.Select(r => r.Team)).Distinct().OrderBy(t => t.Name);
+            // Get all teams from players' rosters
+            var teams = Model.SelectMany(p => p.Rosters.Select(r => r.Team))
+                             .Where(t => t != null)
+                             .Distinct()
+                             .OrderBy(t => t.Name)
+                             .ToList();
+
+            // Add a placeholder for "Unassigned" players
+            var unassignedPlayers = Model.Where(p => !p.Rosters.Any()).ToList();
         }
 
+        <!-- Display players under each team -->
         @foreach (var team in teams)
         {
             <tr>
@@ -45,18 +54,43 @@
                     <td>@(player.Email ?? "N/A")</td>
                     <td>@(player.Phone ?? "N/A")</td>
                     <td>
-                        @foreach (var roster in player.Rosters)
+                        @{
+                            var isManager = team.ManagerID == player.PlayerId ? "Manager" :
+                                            team.AssistantManagerID == player.PlayerId ? "Assistant Manager" : "";
+                        }
+                        @if (!string.IsNullOrEmpty(isManager))
                         {
-                            if (roster.Team.ManagerID == player.PlayerId)
-                            {
-                                <div>Manager</div>
-                            }
-                            else if (roster.Team.AssistantManagerID == player.PlayerId)
-                            {
-                                <div>Assistant Manager</div>
-                            }
+                            <div>@isManager</div>
                         }
                     </td>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new { id = player.PlayerId }, new { @class = "btn btn-primary btn-sm" })
+                        @Html.ActionLink("Delete", "Delete", new { id = player.PlayerId }, new { @class = "btn btn-danger btn-sm" })
+                    </td>
+                </tr>
+            }
+        }
+
+        <!-- Display unassigned players under "Unassigned" group -->
+        @if (unassignedPlayers.Any())
+        {
+            <tr>
+                <th colspan="6">Unassigned</th>
+            </tr>
+            foreach (var player in unassignedPlayers)
+            {
+                <tr>
+                    <td></td> <!-- Empty cell for team column -->
+                    <td>
+                        @Html.ActionLink(
+                            $"{player.FirstName} {player.LastName}",
+                            "Details",
+                            new { id = player.PlayerId },
+                            null)
+                    </td>
+                    <td>@(player.Email ?? "N/A")</td>
+                    <td>@(player.Phone ?? "N/A")</td>
+                    <td></td> <!-- No manager role -->
                     <td>
                         @Html.ActionLink("Edit", "Edit", new { id = player.PlayerId }, new { @class = "btn btn-primary btn-sm" })
                         @Html.ActionLink("Delete", "Delete", new { id = player.PlayerId }, new { @class = "btn btn-danger btn-sm" })

@@ -6,9 +6,7 @@
 
 <h2>@ViewBag.Title</h2>
 
-<h3>
-    @Model.FirstName @Model.LastName
-</h3>
+<h3>@Model.FirstName @Model.LastName</h3>
 
 <table class="table table-bordered">
     <tr>
@@ -18,10 +16,6 @@
     <tr>
         <th>Last Name</th>
         <td>@Model.LastName</td>
-    </tr>
-    <tr>
-        <th>Nickname</th>
-        <td>@(Model.NickName ?? "N/A")</td>
     </tr>
     <tr>
         <th>Email</th>
@@ -42,10 +36,6 @@
     <tr>
         <th>Zip Code</th>
         <td>@(Model.ZipCode ?? "N/A")</td>
-    </tr>
-    <tr>
-        <th>Shirt Size</th>
-        <td>@(Model.ShirtSize ?? "N/A")</td>
     </tr>
     <tr>
         <th>Emergency Contact</th>
@@ -72,34 +62,23 @@
             }
         </td>
     </tr>
-</table>
-
-<!-- Teams the Player is On -->
-<h4>Teams</h4>
-@if (Model.Rosters.Any())
-{
-    <table class="table table-bordered">
-        <thead>
-            <tr>
-                <th>Team Name</th>
-                <th>Division</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var roster in Model.Rosters)
+    <tr>
+        <th>Team</th>
+        <td>
+            @if (Model.Rosters.Any())
             {
-                <tr>
-                    <td>@(roster.Team?.Name ?? "N/A")</td>
-                    <td>@(roster.Team?.Division?.Name ?? "N/A")</td>
-                </tr>
+                foreach (var roster in Model.Rosters)
+                {
+                    @roster.Team.Name<br />
+                }
             }
-        </tbody>
-    </table>
-}
-else
-{
-    <p>This player is not on any teams.</p>
-}
+            else
+            {
+                <span>No team assigned</span>
+            }
+        </td>
+    </tr>
+</table>
 
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.PlayerId }, new { @class = "btn btn-primary" }) |
