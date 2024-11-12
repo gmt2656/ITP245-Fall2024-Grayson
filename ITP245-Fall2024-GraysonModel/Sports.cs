@@ -1,6 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Web;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace ITP245_Fall2024_GraysonModel
 {
@@ -29,6 +33,10 @@ namespace ITP245_Fall2024_GraysonModel
     [MetadataType(typeof(Team.TeamMetadata))]
     public partial class Team : ISports
     {
+        public byte[] TeamLogo { get; set; }
+        public string ImageLocation { get; set; } // For file-based storage
+        public HttpPostedFileBase FileName { get; set; }
+
         private sealed class TeamMetadata
         {
             [Display(Name = "Team")]
@@ -45,8 +53,12 @@ namespace ITP245_Fall2024_GraysonModel
 
             [Display(Name = "Short Name")]
             public string ShortName { get; set; }
+
+            [Display(Name = "Team Logo")]
+            public byte[] TeamLogo { get; set; } // Add this property for the logo
         }
     }
+
 
     // Field Class with Metadata
     [MetadataType(typeof(Field.FieldMetadata))]

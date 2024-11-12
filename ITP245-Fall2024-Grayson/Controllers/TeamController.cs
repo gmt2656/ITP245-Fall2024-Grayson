@@ -1,8 +1,13 @@
-﻿using ITP245_Fall2024_GraysonModel;
+﻿using System;
+using System.Configuration;
 using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
+using System.IO;
 using System.Linq;
 using System.Net;
+using System.Web;
 using System.Web.Mvc;
+using ITP245_Fall2024_GraysonModel;
 
 namespace ITP245_Fall2024_Grayson.Controllers
 {
@@ -13,6 +18,7 @@ namespace ITP245_Fall2024_Grayson.Controllers
         // GET: Team
         public ActionResult Index()
         {
+            ViewBag.ImagePath = ConfigurationManager.AppSettings["LogoImageLocation"];
             var teams = db.Teams
                 .Include(t => t.Division)
                 .Include(t => t.Player)
@@ -21,7 +27,6 @@ namespace ITP245_Fall2024_Grayson.Controllers
 
             return View(teams);
         }
-
 
         // GET: Team/Details/5
         public ActionResult Details(int id)
@@ -47,16 +52,26 @@ namespace ITP245_Fall2024_Grayson.Controllers
         public ActionResult Create()
         {
             PopulateViewBags();
-            return View();
+            return View(new Team());
         }
 
         // POST: Team/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Name,DivisionId,ManagerID,AssistantManagerID,ShortName")] Team team)
+        public ActionResult Create([Bind(Include = "Name,DivisionId,ManagerID,AssistantManagerID,ShortName,ImageLocation")] Team team, HttpPostedFileBase TeamLogo)
         {
             if (ModelState.IsValid)
             {
+                if (TeamLogo != null && TeamLogo.ContentLength > 0)
+                {
+                    // Save the file to the file system
+                    var filePath = Path.Combine(Server.MapPath("~/Images/TeamLogos"), Path.GetFileName(TeamLogo.FileName));
+                    TeamLogo.SaveAs(filePath);
+
+                    // Save the file path to the database
+                    team.ImageLocation = Path.GetFileName(TeamLogo.FileName);
+                }
+
                 db.Teams.Add(team);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -79,38 +94,72 @@ namespace ITP245_Fall2024_Grayson.Controllers
             {
                 return HttpNotFound();
             }
-
-            ViewBag.NameList = new SelectList(db.Teams, "Name", "Name", team.Name);
-            ViewBag.ShortNameList = new SelectList(db.Teams, "ShortName", "ShortName", team.ShortName);
-            ViewBag.DivisionId = new SelectList(db.Divisions, "DivisionId", "Name", team.DivisionId); // Set current Division
-            ViewBag.ManagerID = new SelectList(db.Players, "PlayerId", "Name", team.ManagerID); // Set current Manager
-            ViewBag.AssistantManagerID = new SelectList(db.Players, "PlayerId", "Name", team.AssistantManagerID); // Set current Assistant Manager
-
+            ViewBag.ImagePath = ConfigurationManager.AppSettings["LogoImageLocation"];
+            PopulateViewBags(team);
             return View(team);
         }
-
 
         // POST: Team/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "TeamId,Name,DivisionId,ManagerID,AssistantManagerID,ShortName")] Team team)
+        public ActionResult Edit([Bind(Include = "TeamId,Name,DivisionId,ManagerID,AssistantManagerID,ShortName,ImageLocation")] Team team, HttpPostedFileBase TeamLogo)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(team).State = EntityState.Modified;
-                try
+                if (TeamLogo != null && TeamLogo.ContentLength > 0)
                 {
+                    var filePath = Path.Combine(Server.MapPath("~/Images/TeamLogos"), Path.GetFileName(TeamLogo.FileName));
+                    TeamLogo.SaveAs(filePath);
+
+                    team.ImageLocation = Path.GetFileName(TeamLogo.FileName);
+                }
+
+                // Reload the entity from the database
+                var dbTeam = db.Teams.Find(team.TeamId);
+                if (dbTeam != null)
+                {
+                    db.Entry(dbTeam).CurrentValues.SetValues(team);
                     db.SaveChanges();
                     return RedirectToAction("Index");
                 }
-                catch (System.Data.Entity.Infrastructure.DbUpdateConcurrencyException)
+                else
                 {
-                    ModelState.AddModelError("", "Unable to save changes. The team was modified or deleted by another user.");
+                    // Handle the case where the entity was not found
+                    return HttpNotFound();
                 }
             }
 
             PopulateViewBags(team);
             return View(team);
+        }
+
+        private string UploadImage(HttpPostedFileBase file)
+        {
+            if (file != null && file.ContentLength > 0)
+            {
+                try
+                {
+                    var allowedExtensions = new[] { ".jpg", ".png", ".jpeg" };
+                    var ext = Path.GetExtension(file.FileName).ToLower();
+                    var imagePath = ConfigurationManager.AppSettings["LogoImageLocation"];
+                    var path = Path.Combine(Server.MapPath(imagePath), Path.GetFileName(file.FileName));
+
+                    if (allowedExtensions.Contains(ext))
+                    {
+                        file.SaveAs(path);
+                        return "File uploaded successfully";
+                    }
+                    else
+                    {
+                        return "Please use file extensions JPG and PNG.";
+                    }
+                }
+                catch (Exception ex)
+                {
+                    return "ERROR: " + ex.Message;
+                }
+            }
+            return "No file selected.";
         }
 
         // GET: Team/Delete/5
@@ -121,13 +170,15 @@ namespace ITP245_Fall2024_Grayson.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            Team team = db.Teams
+            var team = db.Teams
                 .Include(t => t.Division)
                 .FirstOrDefault(t => t.TeamId == id);
             if (team == null)
             {
                 return HttpNotFound();
             }
+
+            ViewBag.ImagePath = ConfigurationManager.AppSettings["LogoImageLocation"];
             return View(team);
         }
 
@@ -135,7 +186,7 @@ namespace ITP245_Fall2024_Grayson.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Team team = db.Teams
+            var team = db.Teams
                 .Include(t => t.Games)
                 .Include(t => t.Games1)
                 .Include(t => t.Rosters)
@@ -169,7 +220,6 @@ namespace ITP245_Fall2024_Grayson.Controllers
             return RedirectToAction("Index");
         }
 
-
         // Helper method to populate ViewBag for dropdown lists
         private void PopulateViewBags(Team team = null)
         {
@@ -178,14 +228,24 @@ namespace ITP245_Fall2024_Grayson.Controllers
             ViewBag.AssistantManagerID = new SelectList(db.Players, "PlayerId", "Name", team?.AssistantManagerID);
         }
 
-        // Dispose method to release database resources
-        protected override void Dispose(bool disposing)
+        // Action to display team image
+        public ActionResult DisplayImage(int id)
         {
-            if (disposing)
+            var team = db.Teams.Find(id);
+            if (team != null && !string.IsNullOrEmpty(team.ImageLocation))
             {
-                db.Dispose();
+                // Get the file path
+                var filePath = Path.Combine(Server.MapPath("~/Images/TeamLogos"), team.ImageLocation);
+
+                // Check if the file exists
+                if (System.IO.File.Exists(filePath))
+                {
+                    // Return the image file
+                    return File(filePath, "image/jpeg");
+                }
             }
-            base.Dispose(disposing);
+
+            return new HttpStatusCodeResult(HttpStatusCode.NotFound);
         }
     }
 }

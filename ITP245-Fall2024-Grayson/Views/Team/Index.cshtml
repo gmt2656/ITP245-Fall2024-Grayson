@@ -1,7 +1,9 @@
 ﻿@model IEnumerable<ITP245_Fall2024_GraysonModel.Team>
+@using System.Configuration;
 
 @{
-    ViewBag.Title = "Teams Index";
+    ViewBag.Title = "Teams";
+    ViewBag.ImagePath = ConfigurationManager.AppSettings["LogoImageLocation"]; // Getting the image path from the config
 }
 
 <h2>@ViewBag.Title</h2>
@@ -13,8 +15,9 @@
 <table class="table table-striped table-bordered">
     <thead>
         <tr>
-            <th>Team Name</th>
-            <th>Division</th>
+            <th>Logo</th>
+            <th>@Html.DisplayNameFor(model => model.Name)</th>
+            <th>@Html.DisplayNameFor(model => model.Division)</th>
             <th>Actions</th>
         </tr>
     </thead>
@@ -22,6 +25,13 @@
         @foreach (var team in Model)
         {
             <tr>
+                <td>
+                    @if (!string.IsNullOrEmpty(team.ImageLocation))
+                    {
+                        var image = string.Format("{0}{1}", ViewBag.ImagePath, team.ImageLocation);
+                        <img id="Team Logo Image" height="100" width="90" style="border:solid" src="@Url.Content(image)" alt="Team Logo" />
+                    }
+                </td>
                 <td>
                     <a href="#" class="team-link" data-team-id="@team.TeamId">@team.Name</a>
                 </td>

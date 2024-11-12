@@ -156,6 +156,14 @@
     <Content Include="Content\bootstrap.rtl.css" />
     <Content Include="Content\bootstrap.rtl.min.css" />
     <Content Include="Content\Sports.css" />
+    <Content Include="Images\TeamLogos\bananas.jpg" />
+    <Content Include="Images\TeamLogos\goats.jpg" />
+    <Content Include="Images\TeamLogos\iron birds.png" />
+    <Content Include="Images\TeamLogos\rubber ducks.jpg" />
+    <Content Include="Images\TeamLogos\sea wolves.png" />
+    <Content Include="Images\TeamLogos\shuckers.png" />
+    <Content Include="Images\TeamLogos\Squirrels.jpg" />
+    <Content Include="Images\TeamLogos\tides.png" />
     <Content Include="Content\theme2.css" />
     <Content Include="Content\theme3.css" />
     <Content Include="favicon.ico" />

@@ -1,7 +1,9 @@
 ﻿@model ITP245_Fall2024_GraysonModel.Team
+   
 
 @{
     ViewBag.Title = "Delete Team";
+    var imagePath = System.Configuration.ConfigurationManager.AppSettings["LogoImageLocation"];
 }
 
 <h2>@ViewBag.Title</h2>
@@ -10,6 +12,12 @@
 <div>
     <h4>Team: @(Model.Name)</h4>
     <p>Division: @(Model.Division?.Name ?? "N/A")</p>
+    @if (!string.IsNullOrEmpty(Model.ImageLocation))
+    {
+        var image = string.Format("{0}{1}", imagePath, Model.ImageLocation);
+        <p>Logo:</p>
+        <img src="@Url.Content(image)" alt="Team Logo" width="100" height="100" />
+    }
 </div>
 
 @using (Html.BeginForm())
