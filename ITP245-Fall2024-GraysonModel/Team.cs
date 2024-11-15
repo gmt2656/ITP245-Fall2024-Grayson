@@ -28,6 +28,8 @@ namespace ITP245_Fall2024_GraysonModel
         public Nullable<int> ManagerID { get; set; }
         public Nullable<int> AssistantManagerID { get; set; }
         public string ShortName { get; set; }
+        public string ImageLocation { get; set; }
+        public byte[] LogoImage { get; set; }
     
         public virtual Division Division { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

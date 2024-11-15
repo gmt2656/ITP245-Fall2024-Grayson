@@ -3,7 +3,7 @@
 
 @{
     ViewBag.Title = "Teams";
-    ViewBag.ImagePath = ConfigurationManager.AppSettings["LogoImageLocation"]; // Getting the image path from the config
+    ViewBag.ImagePath = ConfigurationManager.AppSettings["LogoImageLocation"]; // Getting the image path from config
 }
 
 <h2>@ViewBag.Title</h2>
@@ -16,8 +16,8 @@
     <thead>
         <tr>
             <th>Logo</th>
-            <th>@Html.DisplayNameFor(model => model.Name)</th>
-            <th>@Html.DisplayNameFor(model => model.Division)</th>
+            <th>Name</th>
+            <th>Division</th>
             <th>Actions</th>
         </tr>
     </thead>
@@ -29,18 +29,23 @@
                     @if (!string.IsNullOrEmpty(team.ImageLocation))
                     {
                         var image = string.Format("{0}{1}", ViewBag.ImagePath, team.ImageLocation);
-                        <img id="Team Logo Image" height="100" width="90" style="border:solid" src="@Url.Content(image)" alt="Team Logo" />
+                        <img id="TeamLogoImage" height="100" width="90" style="border:solid" src="@Url.Content(image)" alt="Team Logo" />
+                    }
+                    else
+                    {
+                        <img id="TeamLogoImage" height="100" width="90" style="border:solid"
+                             src="@Url.Content("~/Images/placeholder.jpg")" alt="Placeholder Logo" />
                     }
                 </td>
                 <td>
                     <a href="#" class="team-link" data-team-id="@team.TeamId">@team.Name</a>
                 </td>
                 <td>
-                    @(team.Division != null ? team.Division.Name : "N/A")
+                    @(team.Division?.Name ?? "N/A")
                 </td>
                 <td>
                     @Html.ActionLink("Edit", "Edit", new { id = team.TeamId }, new { @class = "btn btn-primary btn-sm" })
-                    @Html.ActionLink("Delete", "Delete", new { id = team.TeamId }, new { @class = "btn btn-danger btn-sm" })
+                    @Html.ActionLink("Delete", "Delete", new { id = team.TeamId }, new { @class = "btn btn-danger" })
                 </td>
             </tr>
         }
@@ -58,13 +63,12 @@
             // Handle click event on team links
             $(document).on('click', '.team-link', function (e) {
                 e.preventDefault();
-                var teamId = $(this).data('team-id');
+                var TeamId = $(this).data('team-id');  // Get the TeamId from the link
                 $.ajax({
-                    url: '@Url.Action("Details", "Team")',
-                    data: { id: teamId },
+                    url: '@Url.Action("Details", "Team", new { id = "__ID__" })'.replace('__ID__', TeamId),
                     type: "GET",
                     success: function (data) {
-                        $('#team-details').html(data);
+                        $('#team-details').html(data);  // Insert the response data into the div
                     },
                     error: function () {
                         alert('Error loading team details.');

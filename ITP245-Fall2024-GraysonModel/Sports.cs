@@ -29,12 +29,13 @@ namespace ITP245_Fall2024_GraysonModel
         }
     }
 
-    // Team Class with Metadata
     [MetadataType(typeof(Team.TeamMetadata))]
     public partial class Team : ISports
     {
-        public byte[] TeamLogo { get; set; }
-        public string ImageLocation { get; set; } // For file-based storage
+        // Store image data in the database (if using binary storage)
+        public byte[] TeamLogo { get; set; } // For database storage of the image
+
+        // Property to handle file upload
         public HttpPostedFileBase FileName { get; set; }
 
         private sealed class TeamMetadata
@@ -53,12 +54,8 @@ namespace ITP245_Fall2024_GraysonModel
 
             [Display(Name = "Short Name")]
             public string ShortName { get; set; }
-
-            [Display(Name = "Team Logo")]
-            public byte[] TeamLogo { get; set; } // Add this property for the logo
         }
     }
-
 
     // Field Class with Metadata
     [MetadataType(typeof(Field.FieldMetadata))]

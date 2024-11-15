@@ -1,30 +1,30 @@
 ﻿@model ITP245_Fall2024_GraysonModel.Team
-   
 
 @{
     ViewBag.Title = "Delete Team";
-    var imagePath = System.Configuration.ConfigurationManager.AppSettings["LogoImageLocation"];
+    var defaultImage = Url.Content("~/Images/default-logo.png");
+    var teamImage = (Model.TeamLogo == null || Model.TeamLogo.Length == 0)
+                ? defaultImage
+                : Url.Action("GetTeamLogo", "Team", new { teamId = Model.TeamId });
+
 }
 
 <h2>@ViewBag.Title</h2>
 
 <h3>Are you sure you want to delete this team?</h3>
-<div>
-    <h4>Team: @(Model.Name)</h4>
+<div class="team-details">
+    <h4>Team: @Model.Name</h4>
     <p>Division: @(Model.Division?.Name ?? "N/A")</p>
-    @if (!string.IsNullOrEmpty(Model.ImageLocation))
-    {
-        var image = string.Format("{0}{1}", imagePath, Model.ImageLocation);
-        <p>Logo:</p>
-        <img src="@Url.Content(image)" alt="Team Logo" width="100" height="100" />
-    }
+    <p>Logo:</p>
+    <img src="@teamImage" alt="Team Logo" width="100" height="100" style="border: solid 1px #ccc; padding: 5px;" />
 </div>
 
-@using (Html.BeginForm())
+@using (Html.BeginForm("DeleteConfirmed", "Team", FormMethod.Post, new { id = "deleteForm" }))
 {
     @Html.AntiForgeryToken()
     @Html.HiddenFor(model => model.TeamId)
-    <div class="form-group">
+
+    <div class="form-group mt-3">
         <input type="submit" value="Delete" class="btn btn-danger" />
         @Html.ActionLink("Cancel", "Index", null, new { @class = "btn btn-secondary" })
     </div>

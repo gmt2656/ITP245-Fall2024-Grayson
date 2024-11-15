@@ -103,6 +103,8 @@
           <Property Name="ManagerID" Type="int" />
           <Property Name="AssistantManagerID" Type="int" />
           <Property Name="ShortName" Type="varchar" MaxLength="10" />
+          <Property Name="ImageLocation" Type="varchar(max)" />
+          <Property Name="LogoImage" Type="varbinary(max)" />
         </EntityType>
         <Association Name="FK_dbo_Game_dbo_Field_FieldId">
           <End Role="Field" Type="Self.Field" Multiplicity="1">
@@ -401,6 +403,8 @@
           <NavigationProperty Name="Player" Relationship="Self.FK_Team_AsstManager" FromRole="Team" ToRole="Player" />
           <NavigationProperty Name="Player1" Relationship="Self.FK_Team_Manager" FromRole="Team" ToRole="Player" />
           <NavigationProperty Name="Rosters" Relationship="Self.FK_Roster_Team" FromRole="Team" ToRole="Roster" />
+          <Property Name="ImageLocation" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="LogoImage" Type="Binary" MaxLength="Max" FixedLength="false" />
         </EntityType>
         <Association Name="FK_dbo_Team_dbo_Division_DivisionId">
           <End Role="Division" Type="Self.Division" Multiplicity="1">
@@ -687,6 +691,8 @@
           <EntitySetMapping Name="Teams">
             <EntityTypeMapping TypeName="SportsModel.Team">
               <MappingFragment StoreEntitySet="Team">
+                <ScalarProperty Name="LogoImage" ColumnName="LogoImage" />
+                <ScalarProperty Name="ImageLocation" ColumnName="ImageLocation" />
                 <ScalarProperty Name="TeamId" ColumnName="TeamId" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="DivisionId" ColumnName="DivisionId" />

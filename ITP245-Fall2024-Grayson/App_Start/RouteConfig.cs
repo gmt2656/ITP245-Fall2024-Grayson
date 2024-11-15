@@ -24,6 +24,13 @@ namespace ITP245_Fall2024_Grayson
                 url: "Games/{action}/{id}",
                 defaults: new { controller = "Games", action = "Index", id = UrlParameter.Optional }
             );
+
+            // Ensure Team routes are available
+            routes.MapRoute(
+                name: "Team",
+                url: "Team/{action}/{id}",
+                defaults: new { controller = "Team", action = "Index", id = UrlParameter.Optional }
+            );
         }
     }
 }
