@@ -3,7 +3,6 @@
 
 @{
     ViewBag.Title = "Teams";
-    ViewBag.ImagePath = ConfigurationManager.AppSettings["LogoImageLocation"]; // Getting the image path from config
 }
 
 <h2>@ViewBag.Title</h2>
@@ -28,8 +27,8 @@
                 <td>
                     @if (!string.IsNullOrEmpty(team.ImageLocation))
                     {
-                        var image = string.Format("{0}{1}", ViewBag.ImagePath, team.ImageLocation);
-                        <img id="TeamLogoImage" height="100" width="90" style="border:solid" src="@Url.Content(image)" alt="Team Logo" />
+                        <img id="TeamLogoImage" height="100" width="90" style="border:solid"
+                             src="@Url.Content(team.ImageLocation)" alt="Team Logo" />
                     }
                     else
                     {

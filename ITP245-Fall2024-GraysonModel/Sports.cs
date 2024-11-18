@@ -32,9 +32,6 @@ namespace ITP245_Fall2024_GraysonModel
     [MetadataType(typeof(Team.TeamMetadata))]
     public partial class Team : ISports
     {
-        // Store image data in the database (if using binary storage)
-        public byte[] TeamLogo { get; set; } // For database storage of the image
-
         // Property to handle file upload
         public HttpPostedFileBase FileName { get; set; }
 
@@ -54,6 +51,10 @@ namespace ITP245_Fall2024_GraysonModel
 
             [Display(Name = "Short Name")]
             public string ShortName { get; set; }
+
+            // Add Display Name or validation for the FileName (optional)
+            [Display(Name = "Team Logo")]
+            public HttpPostedFileBase FileName { get; set; } 
         }
     }
 

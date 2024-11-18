@@ -2,11 +2,11 @@
 
 @{
     ViewBag.Title = "Delete Team";
-    var defaultImage = Url.Content("~/Images/default-logo.png");
-    var teamImage = (Model.TeamLogo == null || Model.TeamLogo.Length == 0)
+    var defaultImage = Url.Content("~/Images/placeholder.jpg");
+    // If the TeamLogo field is null or empty, use the default image, otherwise use the URL action for the logo.
+    var teamImage = string.IsNullOrEmpty(Model.ImageLocation) || Model.ImageLocation == null
                 ? defaultImage
-                : Url.Action("GetTeamLogo", "Team", new { teamId = Model.TeamId });
-
+                : Url.Content(Model.ImageLocation); // Assuming ImageLocation stores the relative path to the logo
 }
 
 <h2>@ViewBag.Title</h2>
@@ -22,7 +22,7 @@
 @using (Html.BeginForm("DeleteConfirmed", "Team", FormMethod.Post, new { id = "deleteForm" }))
 {
     @Html.AntiForgeryToken()
-    @Html.HiddenFor(model => model.TeamId)
+    @Html.HiddenFor(model => model.TeamId) <!-- This will send the TeamId to the DeleteConfirmed method -->
 
     <div class="form-group mt-3">
         <input type="submit" value="Delete" class="btn btn-danger" />

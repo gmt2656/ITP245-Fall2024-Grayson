@@ -1,9 +1,103 @@
 ﻿@model ITP245_Fall2024_GraysonModel.Team
-@using System.Configuration;
+
+<h2>Create Team</h2>
 
 @using (Html.BeginForm("Create", "Team", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-    @Html.Partial("_Edit", Model)
+    @Html.HiddenFor(model => model.TeamId)
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Name)
+        @Html.TextBoxFor(model => model.Name, new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.DivisionId, "Division", htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.DropDownListFor(
+            model => model.DivisionId,
+            (SelectList)ViewBag.DivisionId,
+            "--Select Division--", // Placeholder text
+            new { @class = "form-control" }
+        )
+        @Html.ValidationMessageFor(model => model.DivisionId, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.ManagerID, "Manager", htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.DropDownListFor(
+            model => model.ManagerID,
+            (SelectList)ViewBag.ManagerID,
+            "--Select Manager--", // Placeholder text
+            new { @class = "form-control" }
+        )
+        @Html.ValidationMessageFor(model => model.ManagerID, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.AssistantManagerID, "Assistant Manager", htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.DropDownListFor(
+            model => model.AssistantManagerID,
+            (SelectList)ViewBag.AssistantManagerID,
+            "--Select Assistant Manager--", // Placeholder text
+            new { @class = "form-control" }
+        )
+        @Html.ValidationMessageFor(model => model.AssistantManagerID, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.ShortName)
+        @Html.TextBoxFor(model => model.ShortName, new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.ShortName, "", new { @class = "text-danger" })
+    </div>
+
+    <div id="uploader" class="form-group">
+        <div class="row">
+            @Html.Label("Select Team Logo", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <input id="FileName" type="file" name="FileName" accept="image/*" onchange="show(this)" />
+                <span>@Html.ValidationMessageFor(model => model.FileName, "", new { @class = "text-danger" })</span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-10 col-md-offset-2">
+                <!-- Image Preview -->
+                <img id="TeamLogoImage" src="" alt="Logo Preview" style="display:none; width: 100px;" />
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <input type="submit" value="Save" class="btn btn-primary" />
+    </div>
+
+    <div class="form-group">
+        @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-secondary" })
+    </div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jquery")
+
+    <script type="text/javascript">
+        function show(input) {
+            if (input.files && input.files[0]) {
+                var file = input.files[0];
+                if (file.type.startsWith("image/")) {
+                    var reader = new FileReader();
+                    reader.onload = function (e) {
+                        $('#TeamLogoImage').attr('src', e.target.result).show(); // Show image preview for valid files
+                    }
+                    reader.readAsDataURL(file);
+                } else {
+                    alert("Please select an image file.");
+                    $('#TeamLogoImage').attr('src', '').hide(); // Hide preview if not an image file
+                }
+            } else {
+                $('#TeamLogoImage').attr('src', '').hide(); // Hide preview if no file is selected
+            }
+        }
+    </script>
 }
