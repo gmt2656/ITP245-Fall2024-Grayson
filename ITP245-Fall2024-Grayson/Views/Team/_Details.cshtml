@@ -1,89 +1,106 @@
 ﻿@{
-    Layout = null;  // Prevent layout from being applied
+    Layout = null; // Prevent layout from being applied
 }
 
 @model ITP245_Fall2024_GraysonModel.Team
+@using ITP245_Fall2024_Grayson.Helpers;
 
-<h3>@Model.Name Details</h3>
+<!-- CSS and Scripts -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" />
+<link href="~/Content/Sports.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-<!-- Team Information -->
-<table class="table table-bordered">
-    <tr>
-        <th>Division</th>
-        <td>@(Model.Division != null ? Model.Division.Name : "N/A")</td>
-    </tr>
-    <tr>
-        <th>Manager</th>
-        <td>@(Model.Player != null ? Model.Player.Name : "N/A")</td>
-    </tr>
-    <tr>
-        <th>Assistant Manager</th>
-        <td>@(Model.Player1 != null ? Model.Player1.Name : "N/A")</td>
-    </tr>
-    <tr>
-        <th>Short Name</th>
-        <td>@(Model.ShortName != null ? Model.ShortName : "N/A")</td>
-    </tr>
-</table>
+<title>@Model.Name - Team Details</title>
 
-<!-- Roster Section -->
-<h4>Roster</h4>
-<table class="table table-bordered">
-    <thead>
-        <tr>
-            <th>Player Name</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var roster in Model.Rosters)
-        {
+@if (Model == null)
+{
+    <h3>Team not found</h3>
+    <a href="/Team" class="btn btn-primary">Back to Teams</a>
+}
+else
+{
+    <!-- Team Header -->
+    <h2 class="text-center my-3">@Model.Name</h2>
+
+    <!-- Team Information Table -->
+    <h4>Team Information</h4>
+    <table class="table table-bordered">
+        <thead>
             <tr>
-                <td>@(roster.Player != null ? roster.Player.Name : "N/A")</td>
+                <th>Division</th>
+                <th>Manager</th>
+                <th>Assistant Manager</th>
+                <th>Short Name</th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            <tr>
+                <td>@(Model.Division != null ? Model.Division.Name : "N/A")</td>
+                <td>@(Model.Player != null ? Model.Player.Name : "N/A")</td>
+                <td>@(Model.Player1 != null ? Model.Player1.Name : "N/A")</td>
+                <td>@(Model.ShortName ?? "N/A")</td>
+            </tr>
+        </tbody>
+    </table>
 
-<!-- Schedule Section -->
-<h4>Game Schedule</h4>
-<table class="table table-bordered">
-    <thead>
-        <tr>
-            <th>Date</th>
-            <th>Time</th>
-            <th>Opponent</th>
-            <th>Location</th>
-            <th>Field</th>
-            <th>Home Score</th>
-            <th>Visitor Score</th>
-        </tr>
-    </thead>
-    <tbody>
-        <!-- Home Games -->
-        @foreach (var game in Model.Games)
-        {
+    <!-- Roster Table -->
+    <h4>Roster</h4>
+    <table class="table table-bordered">
+        <thead>
             <tr>
-                <td>@Html.ActionLink(game.DateTime.ToString("MM/dd/yyyy"), "Details", "Game", new { id = game.GameId }, null)</td>
-                <td>@game.DateTime.ToString("hh:mm tt")</td>
-                <td>@(game.Team1?.Name ?? "N/A")</td> <!-- Opponent Team for Home Games -->
-                <td>Home</td>
-                <td>@(game.Field?.Name ?? "N/A")</td> <!-- Field for Home Games -->
-                <td>@(game.HomeScore?.ToString() ?? "N/A")</td> <!-- Home Score -->
-                <td>@(game.VisitorScore?.ToString() ?? "N/A")</td> <!-- Visitor Score -->
+                <th>Player Name</th>
             </tr>
-        }
-        <!-- Away Games -->
-        @foreach (var game in Model.Games1)
-        {
+        </thead>
+        <tbody>
+            @foreach (var roster in Model.Rosters)
+            {
+                <tr>
+                    <td>@(roster.Player != null ? roster.Player.Name : "N/A")</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <!-- Game Schedule Table -->
+    <h4>Game Schedule</h4>
+    <table class="table table-bordered">
+        <thead>
             <tr>
-                <td>@Html.ActionLink(game.DateTime.ToString("MM/dd/yyyy"), "Details", "Game", new { id = game.GameId }, null)</td>
-                <td>@game.DateTime.ToString("hh:mm tt")</td>
-                <td>@(game.Team?.Name ?? "N/A")</td> <!-- Opponent Team for Away Games -->
-                <td>Away</td>
-                <td>@(game.Field?.Name ?? "N/A")</td> <!-- Field for Away Games -->
-                <td>@(game.HomeScore?.ToString() ?? "N/A")</td> <!-- Home Score -->
-                <td>@(game.VisitorScore?.ToString() ?? "N/A")</td> <!-- Visitor Score -->
+                <th>Date</th>
+                <th>Time</th>
+                <th>Opponent</th>
+                <th>Location</th>
+                <th>Field</th>
+                <th>Home Score</th>
+                <th>Visitor Score</th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var game in Model.Games)
+            {
+                <tr>
+                    <td>@game.DateTime.ToString("MM/dd/yyyy")</td>
+                    <td>@game.DateTime.ToString("hh:mm tt")</td>
+                    <td>@(game.Team1?.Name ?? "N/A")</td>
+                    <td>Home</td>
+                    <td>@(game.Field?.Name ?? "N/A")</td>
+                    <td>@(game.HomeScore?.ToString() ?? "N/A")</td>
+                    <td>@(game.VisitorScore?.ToString() ?? "N/A")</td>
+                </tr>
+            }
+            @foreach (var game in Model.Games1)
+            {
+                <tr>
+                    <td>@game.DateTime.ToString("MM/dd/yyyy")</td>
+                    <td>@game.DateTime.ToString("hh:mm tt")</td>
+                    <td>@(game.Team?.Name ?? "N/A")</td>
+                    <td>Away</td>
+                    <td>@(game.Field?.Name ?? "N/A")</td>
+                    <td>@(game.HomeScore?.ToString() ?? "N/A")</td>
+                    <td>@(game.VisitorScore?.ToString() ?? "N/A")</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

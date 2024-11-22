@@ -1,6 +1,8 @@
 ﻿@model ITP245_Fall2024_GraysonModel.Team
+@using ITP245_Fall2024_Grayson.Helpers
 
-<h2>Create Team</h2>
+@*<h2>Create Team</h2>*@
+@Html.NameHeader(Model)
 
 @using (Html.BeginForm("Create", "Team", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
@@ -58,7 +60,7 @@
             @Html.Label("Select Team Logo", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 <input id="FileName" type="file" name="FileName" accept="image/*" onchange="show(this)" />
-                <span>@Html.ValidationMessageFor(model => model.FileName, "", new { @class = "text-danger" })</span>
+                <span id="FileNameError" class="text-danger"></span>
             </div>
         </div>
         <div class="row">
@@ -88,16 +90,35 @@
                 if (file.type.startsWith("image/")) {
                     var reader = new FileReader();
                     reader.onload = function (e) {
-                        $('#TeamLogoImage').attr('src', e.target.result).show(); // Show image preview for valid files
+                        $('#TeamLogoImage').attr('src', e.target.result).show(); // Show image preview
                     }
                     reader.readAsDataURL(file);
+                    $('#FileNameError').text(""); // Clear error message
                 } else {
-                    alert("Please select an image file.");
-                    $('#TeamLogoImage').attr('src', '').hide(); // Hide preview if not an image file
+                    $('#TeamLogoImage').attr('src', '').hide();
+                    $('#FileNameError').text("Please select a valid image file.");
                 }
             } else {
-                $('#TeamLogoImage').attr('src', '').hide(); // Hide preview if no file is selected
+                $('#TeamLogoImage').attr('src', '').hide();
+                $('#FileNameError').text("Please select a file to upload.");
             }
         }
+
+        document.querySelector("form").addEventListener("submit", function (e) {
+            const fileInput = document.getElementById("FileName");
+            const file = fileInput.files[0];
+
+            if (!file) {
+                alert("Please upload an image file.");
+                e.preventDefault();
+                return;
+            }
+
+            const maxSize = 2 * 1024 * 1024; // 2MB
+            if (file.size > maxSize) {
+                alert("File size must not exceed 2MB.");
+                e.preventDefault();
+            }
+        });
     </script>
 }

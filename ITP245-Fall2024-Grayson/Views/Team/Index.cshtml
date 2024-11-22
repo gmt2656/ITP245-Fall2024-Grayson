@@ -5,10 +5,10 @@
     ViewBag.Title = "Teams";
 }
 
-<h2>@ViewBag.Title</h2>
+<h2 class="text-center my-3">@ViewBag.Title</h2>
 
 <p>
-    @Html.ActionLink("Create New Team", "Create", null, new { @class = "btn btn-success" })
+    @Html.ActionLink("Create New Team", "Create", null, new { @class = "btn btn-success mb-3" })
 </p>
 
 <table class="table table-striped table-bordered">
@@ -24,7 +24,7 @@
         @foreach (var team in Model)
         {
             <tr>
-                <td>
+                <td class="text-center">
                     @if (!string.IsNullOrEmpty(team.ImageLocation))
                     {
                         <img id="TeamLogoImage" height="100" width="90" style="border:solid"
@@ -37,21 +37,26 @@
                     }
                 </td>
                 <td>
-                    <a href="#" class="team-link" data-team-id="@team.TeamId">@team.Name</a>
+                    <!-- Updated to btn-warning for yellow buttons -->
+                    <button class="btn btn-warning btn-team" data-team-id="@team.TeamId">
+                        @team.Name
+                    </button>
                 </td>
                 <td>
                     @(team.Division?.Name ?? "N/A")
                 </td>
                 <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = team.TeamId }, new { @class = "btn btn-primary btn-sm" })
-                    @Html.ActionLink("Delete", "Delete", new { id = team.TeamId }, new { @class = "btn btn-danger" })
+                    <div class="btn-group" role="group">
+                        @Html.ActionLink("Edit", "Edit", new { id = team.TeamId }, new { @class = "btn btn-primary btn-sm" })
+                        @Html.ActionLink("Delete", "Delete", new { id = team.TeamId }, new { @class = "btn btn-danger btn-sm" })
+                    </div>
                 </td>
             </tr>
         }
     </tbody>
 </table>
 
-<div id="team-details">
+<div id="team-details" class="mt-4">
     <!-- Team details will be loaded here -->
 </div>
 
@@ -59,10 +64,10 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         $(document).ready(function () {
-            // Handle click event on team links
-            $(document).on('click', '.team-link', function (e) {
+            // Handle click event on team buttons
+            $(document).on('click', '.btn-team', function (e) {
                 e.preventDefault();
-                var TeamId = $(this).data('team-id');  // Get the TeamId from the link
+                var TeamId = $(this).data('team-id');  // Get the TeamId from the button
                 $.ajax({
                     url: '@Url.Action("Details", "Team", new { id = "__ID__" })'.replace('__ID__', TeamId),
                     type: "GET",
@@ -73,6 +78,13 @@
                         alert('Error loading team details.');
                     }
                 });
+            });
+
+            // Add hover effect to team buttons
+            $(document).on('mouseenter', '.btn-team', function () {
+                $(this).css('background-color', '#e0a800'); // Change to a darker yellow on hover
+            }).on('mouseleave', '.btn-team', function () {
+                $(this).css('background-color', ''); // Reset to default yellow
             });
         });
     </script>

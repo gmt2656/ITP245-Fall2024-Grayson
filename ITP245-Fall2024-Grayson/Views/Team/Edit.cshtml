@@ -1,6 +1,8 @@
 ﻿@model ITP245_Fall2024_GraysonModel.Team
+@using ITP245_Fall2024_Grayson.Helpers
 
-<h2>Edit Team</h2>
+@*<h2>Edit Team</h2>*@
+@Html.NameHeader(Model)
 
 @using (Html.BeginForm("Edit", "Team", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
@@ -29,12 +31,14 @@
         </div>
     }
 
+    <!-- Name -->
     <div class="form-group">
         @Html.LabelFor(model => model.Name)
-        @Html.TextBoxFor(model => model.Name, new { @class = "form-control" })
+        @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
         @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
     </div>
 
+    <!-- Division -->
     <div class="form-group">
         @Html.LabelFor(model => model.DivisionId, "Division", htmlAttributes: new { @class = "control-label col-md-2" })
         @Html.DropDownListFor(
@@ -46,6 +50,7 @@
         @Html.ValidationMessageFor(model => model.DivisionId, "", new { @class = "text-danger" })
     </div>
 
+    <!-- Manager -->
     <div class="form-group">
         @Html.LabelFor(model => model.ManagerID, "Manager", htmlAttributes: new { @class = "control-label col-md-2" })
         @Html.DropDownListFor(
@@ -57,6 +62,7 @@
         @Html.ValidationMessageFor(model => model.ManagerID, "", new { @class = "text-danger" })
     </div>
 
+    <!-- Assistant Manager -->
     <div class="form-group">
         @Html.LabelFor(model => model.AssistantManagerID, "Assistant Manager", htmlAttributes: new { @class = "control-label col-md-2" })
         @Html.DropDownListFor(
@@ -68,12 +74,14 @@
         @Html.ValidationMessageFor(model => model.AssistantManagerID, "", new { @class = "text-danger" })
     </div>
 
+    <!-- Short Name -->
     <div class="form-group">
         @Html.LabelFor(model => model.ShortName)
-        @Html.TextBoxFor(model => model.ShortName, new { @class = "form-control" })
+        @Html.EditorFor(model => model.ShortName, new { htmlAttributes = new { @class = "form-control" } })
         @Html.ValidationMessageFor(model => model.ShortName, "", new { @class = "text-danger" })
     </div>
 
+    <!-- Team Logo -->
     <div id="uploader" class="form-group">
         <div class="row">
             @Html.Label("Select Team Logo", htmlAttributes: new { @class = "control-label col-md-2" })
@@ -90,10 +98,12 @@
         </div>
     </div>
 
+    <!-- Submit Button -->
     <div class="form-group">
         <input type="submit" value="Save" class="btn btn-primary" />
     </div>
 
+    <!-- Back to List -->
     <div class="form-group">
         @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-secondary" })
     </div>

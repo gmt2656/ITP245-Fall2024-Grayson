@@ -1,4 +1,4 @@
-﻿/* Sports.css */
+﻿/* Existing styles */
 h1 {
     font-family: 'Arial Black', sans-serif;
     color: #4A90E2;
@@ -19,3 +19,57 @@ table caption {
     font-size: 1.2em;
     padding: 5px;
 }
+
+/* General styling for team buttons */
+button.TeamButton {
+    background-color: #4CAF50; /* Green background */
+    color: white; /* White text */
+    border: none; /* Remove border */
+    padding: 10px 20px; /* Add padding */
+    text-align: center; /* Center-align text */
+    font-size: 16px; /* Set font size */
+    border-radius: 5px; /* Add rounded corners */
+    cursor: pointer; /* Change cursor to pointer on hover */
+    margin: 5px; /* Add margin between buttons */
+    transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth transition */
+}
+
+    /* Styling when the button is hovered over */
+    button.TeamButton:hover {
+        background-color: #45a049; /* Darker green */
+        transform: scale(1.05); /* Slightly enlarge the button */
+    }
+
+    /* Styling when the button is focused */
+    button.TeamButton:focus {
+        outline: none; /* Remove the default focus outline */
+        box-shadow: 0 0 5px 2px #45a049; /* Add a glowing green outline */
+    }
+
+.table-custom {
+    border: 1px solid #ddd;
+    border-collapse: collapse;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+    .table-custom th,
+    .table-custom td {
+        padding: 8px 12px;
+        text-align: left;
+    }
+
+    .table-custom th {
+        background-color: #f8f9fa;
+        font-weight: bold;
+    }
+
+    .table-custom tbody tr:nth-child(odd) {
+        background-color: #f9f9f9;
+    }
+
+    .table-custom tbody tr:hover {
+        background-color: #e9ecef;
+    }
+
+

@@ -1,4 +1,5 @@
 ﻿@model ITP245_Fall2024_GraysonModel.Team
+@using ITP245_Fall2024_Grayson.Helpers;
 
 @{
     ViewBag.Title = "Delete Team";
@@ -9,7 +10,7 @@
                 : Url.Content(Model.ImageLocation); // Assuming ImageLocation stores the relative path to the logo
 }
 
-<h2>@ViewBag.Title</h2>
+@Html.NameHeader(Model) <!-- Ensure this helper works with Model, which should be a Team -->
 
 <h3>Are you sure you want to delete this team?</h3>
 <div class="team-details">

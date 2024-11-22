@@ -51,13 +51,15 @@ namespace ITP245_Fall2024_Grayson.Controllers
         public ActionResult Create()
         {
             // Populate divisions and players for dropdowns
-            ViewBag.DivisionId = new SelectList(db.Divisions, "DivisionId", "Name");
-            ViewBag.ManagerID = new SelectList(db.Players, "PlayerId", "Name");
-            ViewBag.AssistantManagerID = new SelectList(db.Players, "PlayerId", "Name");
+            ViewBag.DivisionId = new SelectList(db.Divisions.ToList(), "DivisionId", "Name");
+            ViewBag.ManagerID = new SelectList(db.Players.ToList(), "PlayerId", "Name");
+            ViewBag.AssistantManagerID = new SelectList(db.Players.ToList(), "PlayerId", "Name");
 
-            // Return the view with empty team model
-            return View();
+            // Return the view with an empty team model
+            var team = new Team(); // Assuming Team is the model class
+            return View(team);
         }
+
 
         // POST: Team/Create
         [HttpPost]
