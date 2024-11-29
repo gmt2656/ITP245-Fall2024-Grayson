@@ -127,6 +127,10 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Areas\Officers\Controllers\OfficersController.cs" />
+    <Compile Include="Areas\Officers\Controllers\PlayersController.cs" />
+    <Compile Include="Areas\Officers\Controllers\TeamsController.cs" />
+    <Compile Include="Areas\Officers\OfficersAreaRegistration.cs" />
     <Compile Include="Controllers\GameController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PlayerController.cs" />
@@ -264,6 +268,20 @@
     <Content Include="bin\roslyn\vbc.rsp" />
     <Content Include="bin\roslyn\VBCSCompiler.exe.config" />
     <Content Include=".vs\ITP245-Fall2024-Grayson.csproj.dtbcache.json" />
+    <Content Include="Areas\Officers\Views\web.config" />
+    <Content Include="Areas\Officers\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Officers\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\Officers\Views\Officers\Index.cshtml" />
+    <Content Include="Areas\Officers\Views\Players\Create.cshtml" />
+    <Content Include="Areas\Officers\Views\Players\Delete.cshtml" />
+    <Content Include="Areas\Officers\Views\Players\Details.cshtml" />
+    <Content Include="Areas\Officers\Views\Players\Edit.cshtml" />
+    <Content Include="Areas\Officers\Views\Players\Index.cshtml" />
+    <Content Include="Areas\Officers\Views\Teams\Create.cshtml" />
+    <Content Include="Areas\Officers\Views\Teams\Delete.cshtml" />
+    <Content Include="Areas\Officers\Views\Teams\Details.cshtml" />
+    <Content Include="Areas\Officers\Views\Teams\Edit.cshtml" />
+    <Content Include="Areas\Officers\Views\Teams\Index.cshtml" />
     <None Include="Scripts\jquery-3.7.0.intellisense.js" />
     <Content Include="Scripts\jquery-3.7.0.js" />
     <Content Include="Scripts\jquery-3.7.0.min.js" />
@@ -305,7 +323,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="bin\app.publish\" />
+    <Folder Include="Areas\Officers\Data\" />
+    <Folder Include="bin\app.publish\bin\" />
     <Folder Include="bin\Images\TeamLogos\" />
   </ItemGroup>
   <ItemGroup>

@@ -1,0 +1,17 @@
+﻿@{
+    ViewBag.Title = "Officers Home";
+    Layout = "~/Areas/Officers/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<div class="btn-group">
+    <button class="btn btn-primary me-3">
+        <!-- Primary color button with spacing -->
+        @Html.ActionLink("Players", "Index", "Players", new { area = "Officers" }, null)
+    </button>
+    <button class="btn btn-success">
+        <!-- Success color button -->
+        @Html.ActionLink("Teams", "Index", "Teams", new { area = "Officers" }, null)
+    </button>
+</div>

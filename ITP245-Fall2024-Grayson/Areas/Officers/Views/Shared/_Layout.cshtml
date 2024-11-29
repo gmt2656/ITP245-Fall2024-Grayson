@@ -1,0 +1,63 @@
+﻿@using System.Reflection
+@using ITP245_Fall2024_GraysonModel
+
+@{
+    // Get today's date for versioning and deployment
+    var today = DateTime.Now;
+    var versionNumber = today.ToString("MM.dd.yy"); // Example format: 10.26.24
+    var themeFile = "theme3.css"; // Default theme file
+
+    using (var entities = new SportsEntities())
+    {
+        var options = entities.SystemOptions.FirstOrDefault();
+        if (options != null && !string.IsNullOrEmpty(options.Bootstrap))
+        {
+            themeFile = options.Bootstrap; // Update to the theme file from the database
+        }
+    }
+}
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("Sports Home", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <!-- Add links to the Officers area -->
+                    <li>@Html.ActionLink("Players", "Index", "Players", new { area = "Officers" })</li>
+                    <li>@Html.ActionLink("Teams", "Index", "Teams", new { area = "Officers" })</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - Grayson’s Sports Application v @versionNumber.0</p>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>
